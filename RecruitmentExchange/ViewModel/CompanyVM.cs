@@ -19,6 +19,12 @@ namespace RecruitmentExchange.ViewModel
             state = new IdleCompanyView() { DataContext = this };
         }
 
+        public string Name { get; set; }
+        public string Focus { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
+
+        public Company Selected { get; set; }
         UserControl state;
         public UserControl State
         {
@@ -29,6 +35,17 @@ namespace RecruitmentExchange.ViewModel
         public List<Company> Companies { get { 
                 return DBMethods.GetAllCompanies();
             } }
+        public RelayCommand RemoveCompany
+        {
+            get
+            {
+                return new RelayCommand(async obj =>
+                {
+                    await DBMethods.RemoveCompany(Selected);
+                    OnPropertyChanged("Companies");
+                });
+            }
+        }
         public RelayCommand AddCompany
         {
             get
@@ -45,7 +62,13 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj => {
 
-                    //add
+                    DBMethods.AddCompany(new Company() {
+                        Name = Name,
+                        Address =Address,
+                        FocusedOn =Focus,
+                        Phone =Phone,
+
+                    });
                     State = new IdleCompanyView() { DataContext = this };
                 });
             }
