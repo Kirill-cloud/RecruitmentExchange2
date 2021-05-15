@@ -28,7 +28,6 @@ namespace RecruitmentExchange
         {
             InitializeComponent();
             DataContext = new MainViewModel();
-            Deals.DataContext = new DealsVM();
         }
     }
 }

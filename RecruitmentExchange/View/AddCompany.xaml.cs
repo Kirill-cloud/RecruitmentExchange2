@@ -1,5 +1,4 @@
-﻿using RecruitmentExchange.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,15 +16,13 @@ using System.Windows.Shapes;
 namespace RecruitmentExchange.View
 {
     /// <summary>
-    /// Логика взаимодействия для AddAplicantControl.xaml
+    /// Логика взаимодействия для AddCompany.xaml
     /// </summary>
-    public partial class AddAplicantControl : UserControl
+    public partial class AddCompany : UserControl
     {
-        public AddAplicantControl()
+        public AddCompany()
         {
             InitializeComponent();
-            
-           // DataContext = Application.Current.MainWindow.DataContext;
         }
     }
 }
