@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="RecruitmentExchange.View.ApplicantControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RecruitmentExchange.View" xmlns:viewmodel="clr-namespace:RecruitmentExchange.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:DealsVM}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ListBox>
+            <ListBoxItem Content="ДА" />
+            <ListBoxItem Content="ДА" />
+            <ListBoxItem Content="ДА" />
+            <ListBoxItem Content="ДА" />
+            <ListBoxItem Content="ДА" />
+            <Button Command="{Binding ShowAddDeals}" >Add</Button>
+        </ListBox>
+    </Grid>
+</UserControl>
