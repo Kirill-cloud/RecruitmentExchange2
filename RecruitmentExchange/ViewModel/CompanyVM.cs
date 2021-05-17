@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class CompanyVM :TabViewBase, INotifyPropertyChanged
+    public class CompanyVM :TabViewBase
     {
         public CompanyVM()
         {
@@ -53,6 +53,7 @@ namespace RecruitmentExchange.ViewModel
                 return new RelayCommand(obj =>
                 {
                     State = new AddCompany() {DataContext = this };
+                    
                 });
             }
         }
@@ -73,13 +74,5 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
-
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
-
     }
 }

@@ -14,9 +14,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="View\Applicant\" />
-    <Folder Include="View\Deal\" />
-  </ItemGroup>
-
 </Project>

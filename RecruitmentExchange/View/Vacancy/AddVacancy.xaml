@@ -9,9 +9,9 @@
     <Grid>
         <StackPanel>
             <Label Content="Выбор компании" />
-            <ComboBox ItemsSource="{Binding Companies}" />
+            <ComboBox ItemsSource="{Binding Companies}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCompany}" />
             <Label Content="Выбор роли" />
-            <ComboBox ItemsSource="{Binding Roles}"  />
+            <ComboBox ItemsSource="{Binding Roles}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedRole}" />
             <Label Content="Подробности" />
             <TextBox Text="{Binding Description}" />
             <Button Content="Add" Command="{Binding Add}" />

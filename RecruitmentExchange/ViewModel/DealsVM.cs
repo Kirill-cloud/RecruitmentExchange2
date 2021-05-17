@@ -11,37 +11,8 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class DealsVM: TabViewBase// : INotifyPropertyChanged
-    {
-        //UserControl dealsContent = new ApplicantControl();
-        //public UserControl DealsContent { get { return dealsContent; } private set { dealsContent = value; OnPropertyChanged("DealsContent"); } }
-
-        //public RelayCommand ShowDeals
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(obj =>
-        //        {
-        //            DealsContent = new ApplicantControl();
-        //        });
-        //    }
-        //}
-        //public RelayCommand ShowAddDeals
-        //{
-        //    get
-        //    {
-        //        return new RelayCommand(obj =>
-        //        {
-        //            DealsContent = new AddAplicantControl();
-        //        });
-        //    }
-        //}
-
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //public void OnPropertyChanged([CallerMemberName] string prop = "")
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        //}
+    public class DealsVM: TabViewBase 
+    { 
+    
     }
 }

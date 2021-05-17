@@ -12,9 +12,11 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class VacancyVM : TabViewBase, INotifyPropertyChanged
+    class VacancyVM : TabViewBase
     {
-        UserControl state = new IdleVacancyView();
+
+        public Company SelectedCompany { get; set; }
+        public Role SelectedRole { get; set; }
         public string Description { get; set; }
         public List<Company> Companies
         {
@@ -30,6 +32,9 @@ namespace RecruitmentExchange.ViewModel
                 return DBMethods.GetAllRoles();
             }
         }
+
+        UserControl state = new IdleVacancyView();
+
         public UserControl State
         {
             get
@@ -68,15 +73,12 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
+
+                    DBMethods.AddVacany(new Vacancy() { CompanyId = SelectedCompany.Id, RoleId = SelectedRole.Id, Description = Description});
                     State = new IdleVacancyView();
                 });
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
     }
 }
