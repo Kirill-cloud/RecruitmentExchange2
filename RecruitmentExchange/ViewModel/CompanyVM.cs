@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class CompanyVM : INotifyPropertyChanged
+    public class CompanyVM :TabViewBase, INotifyPropertyChanged
     {
         public CompanyVM()
         {

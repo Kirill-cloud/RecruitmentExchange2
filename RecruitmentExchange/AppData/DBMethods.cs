@@ -79,7 +79,8 @@ namespace RecruitmentExchange.AppData
         public static List<Vacancy> GetAllVacancies()
         {
             using AppDBContext db = new();
-            return db.Vacancies.Include(x=>x.Role).Include(x=>x.Company).ToList<Vacancy>();
+            var x = db.Vacancies.Include(x => x.Role).Include(x => x.Company).ToList();
+            return x;
         }
 
         public static Role GetRoleById(int id)
@@ -90,5 +91,7 @@ namespace RecruitmentExchange.AppData
         }
 
         #endregion
+    
+
     }
 }

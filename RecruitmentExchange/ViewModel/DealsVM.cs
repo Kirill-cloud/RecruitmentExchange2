@@ -11,7 +11,7 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class DealsVM// : INotifyPropertyChanged
+    public class DealsVM: TabViewBase// : INotifyPropertyChanged
     {
         //UserControl dealsContent = new ApplicantControl();
         //public UserControl DealsContent { get { return dealsContent; } private set { dealsContent = value; OnPropertyChanged("DealsContent"); } }

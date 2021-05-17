@@ -6,12 +6,12 @@ namespace RecruitmentExchange.View
     /// <summary>
     /// Логика взаимодействия для CompanyView.xaml
     /// </summary>
-    public partial class CompanyView : UserControl
+    public partial class TabContentView : UserControl
     {
-        public CompanyView()
+        public TabContentView(TabViewBase context)
         {
             InitializeComponent();
-            DataContext = new CompanyVM();
+            DataContext = context;
         }
     }
 }

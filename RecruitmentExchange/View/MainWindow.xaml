@@ -45,14 +45,6 @@
             <TabItem Header="Vacancies"     Content="{Binding VacancyView}" />
             <TabItem Header="Roles"         Content="{Binding RoleView }" />
         </TabControl>
-        
-        <!--<StackPanel HorizontalAlignment="Right" Grid.Row="1" Orientation="Horizontal">
-            <Button Command="{Binding AddCompanyWindow}" >Добавить К</Button>
-            <Button Command="{Binding RemoveCompany}" 
-                    CommandParameter="{Binding ElementName=CompaniesList, 
-                    Path=SelectedItem}" >Удалить К</Button>
-            
-            <Button Command="{Binding AddVacancyWindow}"  >Добавить В</Button>
-        </StackPanel>-->
+
     </Grid>
 </Window>
