@@ -12,7 +12,7 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class CompanyVM :TabViewBase
+    public class CompanyVM : TabViewBase
     {
         public CompanyVM()
         {
@@ -32,9 +32,54 @@ namespace RecruitmentExchange.ViewModel
             set { state = value; OnPropertyChanged("State"); }
         }
 
-        public List<Company> Companies { get { 
+
+        //Create
+        public override RelayCommand GoAdd
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    State = new AddCompany() { DataContext = this };
+
+                });
+            }
+        }
+        public RelayCommand Add
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+
+                    DBMethods.AddCompany(new Company()
+                    {
+                        Name = Name,
+                        Address = Address,
+                        FocusedOn = Focus,
+                        Phone = Phone,
+
+                    });
+                    State = new IdleCompanyView() { DataContext = this };
+                });
+            }
+        }
+
+        //Read
+        public List<Company> Companies
+        {
+            get
+            {
                 return DBMethods.GetAllCompanies();
-            } }
+            }
+        }
+
+        //Update
+        //TODO makeUpdate
+
+
+
+        //Delete
         public RelayCommand Remove
         {
             get
@@ -43,34 +88,6 @@ namespace RecruitmentExchange.ViewModel
                 {
                     await DBMethods.RemoveCompany(Selected);
                     OnPropertyChanged("Companies");
-                });
-            }
-        }
-        public override RelayCommand GoAdd
-        {
-            get
-            {
-                return new RelayCommand(obj =>
-                {
-                    State = new AddCompany() {DataContext = this };
-                    
-                });
-            }
-        }
-        public RelayCommand Add
-        {
-            get
-            {
-                return new RelayCommand(obj => {
-
-                    DBMethods.AddCompany(new Company() {
-                        Name = Name,
-                        Address =Address,
-                        FocusedOn =Focus,
-                        Phone =Phone,
-
-                    });
-                    State = new IdleCompanyView() { DataContext = this };
                 });
             }
         }
