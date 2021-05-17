@@ -56,7 +56,7 @@ namespace RecruitmentExchange.ViewModel
         }
 
 
-        public RelayCommand AddVac
+        public override RelayCommand GoAdd
         {
             get
             {

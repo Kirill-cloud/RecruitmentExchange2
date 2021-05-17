@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace RecruitmentExchange.View.Role
 {
     /// <summary>
-    /// Логика взаимодействия для RoleView.xaml
+    /// Логика взаимодействия для AddRole.xaml
     /// </summary>
-    public partial class RoleView : UserControl
+    public partial class AddRole : UserControl
     {
-        public RoleView()
+        public AddRole()
         {
             InitializeComponent();
         }

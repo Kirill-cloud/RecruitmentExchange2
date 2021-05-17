@@ -35,7 +35,7 @@ namespace RecruitmentExchange.ViewModel
         public List<Company> Companies { get { 
                 return DBMethods.GetAllCompanies();
             } }
-        public RelayCommand RemoveCompany
+        public RelayCommand Remove
         {
             get
             {
@@ -46,7 +46,7 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
-        public RelayCommand AddCompany
+        public override RelayCommand GoAdd
         {
             get
             {
@@ -74,5 +74,6 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
+
     }
 }

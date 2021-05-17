@@ -11,8 +11,8 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class DealsVM: TabViewBase 
-    { 
-    
+    public class DealVM : TabViewBase
+    {
+        public override RelayCommand GoAdd => new RelayCommand(obj => { });
     }
 }

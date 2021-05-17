@@ -7,10 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="50" />
-        </Grid.RowDefinitions>
         <DataGrid ItemsSource="{Binding Companies}" SelectionMode="Single" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" SelectedItem="{Binding Selected}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Company" Binding="{Binding Path=Name}" />
@@ -19,9 +15,5 @@
                 <DataGridTextColumn Header="Phone" Binding="{Binding Path=Phone}" />
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="1" >
-            <Button Height="50" Command="{Binding AddCompany}" >Добавить компанию</Button>
-            <Button Height="50" Command="{Binding RemoveCompany}" >Удалить компанию</Button>
-        </StackPanel>
     </Grid>
 </UserControl>

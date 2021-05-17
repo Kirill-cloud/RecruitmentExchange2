@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RecruitmentExchange.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,9 +10,10 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class RoleVM :TabViewBase, INotifyPropertyChanged
+    class RoleVM : TabViewBase, INotifyPropertyChanged
     {
         public UserControl State { get; set; }
 
+        public override RelayCommand GoAdd => new RelayCommand(obj => { } );
     }
 }
