@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RecruitmentExchange.View.Applicant"
+             xmlns:local="clr-namespace:RecruitmentExchange.View.Applicant" xmlns:viewmodel="clr-namespace:RecruitmentExchange.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ApplicantVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <DataGrid ItemsSource="{Binding Applicants}" SelectionMode="Single" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" SelectedItem="{Binding Selected}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" />
+                <DataGridTextColumn Header="Role" Binding="{Binding Path=Role.Name}" />
+                <DataGridTextColumn Header="Salary" Binding="{Binding Path=Salary}" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

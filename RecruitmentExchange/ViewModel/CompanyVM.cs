@@ -2,6 +2,7 @@
 using RecruitmentExchange.Model;
 using RecruitmentExchange.View;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class CompanyVM : TabViewBase
+    public class CompanyVM : TabViewBase, INotifyDataErrorInfo
     {
         public CompanyVM()
         {
@@ -25,13 +26,6 @@ namespace RecruitmentExchange.ViewModel
         public string Phone { get; set; }
 
         public Company Selected { get; set; }
-        UserControl state;
-        public UserControl State
-        {
-            get { return state; }
-            set { state = value; OnPropertyChanged("State"); }
-        }
-
 
         //Create
         public override RelayCommand GoAdd
@@ -51,19 +45,60 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-
-                    DBMethods.AddCompany(new Company()
+                    if (IsValid())
                     {
-                        Name = Name,
-                        Address = Address,
-                        FocusedOn = Focus,
-                        Phone = Phone,
+                        DBMethods.AddCompany(new Company()
+                        {
+                            Name = Name,
+                            Address = Address,
+                            FocusedOn = Focus,
+                            Phone = Phone,
 
-                    });
-                    State = new IdleCompanyView() { DataContext = this };
+                        });
+                        State = new IdleCompanyView() { DataContext = this };
+                    }
+
                 });
             }
         }
+
+        private bool IsValid()
+        {
+            Validate();
+
+            return (errors.Count == 0);
+        }
+        void Validate()
+        {
+            errors.Clear();
+
+            if (Name == null || Name == "")
+            {
+                errors.Add("Name", new List<string>() { "empty" });
+                RaiseErrorsChanged("Name");
+            }
+            if (Focus == null || Focus == "")
+            {
+                errors.Add("Focus", new List<string>() { "empty" });
+                RaiseErrorsChanged("Focus");
+            }
+            if (Address == null || Address == "")
+            {
+                errors.Add("Address", new List<string>() { "empty" });
+                RaiseErrorsChanged("Address");
+            }
+            if (Phone == null || Phone == "")
+            {
+                errors.Add("Phone", new List<string>() { "empty" });
+                RaiseErrorsChanged("Phone");
+            }
+
+            RaiseErrorsChanged("Name");
+            RaiseErrorsChanged("Focus");
+            RaiseErrorsChanged("Address");
+            RaiseErrorsChanged("Phone");
+        }
+
 
         //Read
         public List<Company> Companies

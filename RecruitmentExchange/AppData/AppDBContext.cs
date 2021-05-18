@@ -19,5 +19,6 @@ namespace RecruitmentExchange.AppData
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=REdata;Trusted_Connection=True;");
         }
+
     }
 }

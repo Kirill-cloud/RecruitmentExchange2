@@ -91,7 +91,23 @@ namespace RecruitmentExchange.AppData
         }
 
         #endregion
-    
+
+        #region ForApplicant
+        public static List<Applicant> GetAllApplicants()
+        {
+            using AppDBContext db = new();
+
+            return db.Applicants.Include(x => x.Role).ToList();
+        }
+        #endregion
+        #region ForDeal
+        public static List<Deal> GetAllDeals()
+        {
+            using AppDBContext db = new();
+
+            return db.Deals.Include(x=>x.Applicant).Include(x=>x.Vacancy).Include(x => x.Vacancy.Role).ToList();
+        }
+        #endregion
 
     }
 }

@@ -1,5 +1,7 @@
-﻿using RecruitmentExchange.Model;
+﻿using RecruitmentExchange.AppData;
+using RecruitmentExchange.Model;
 using RecruitmentExchange.View;
+using RecruitmentExchange.View.Deal;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +15,15 @@ namespace RecruitmentExchange.ViewModel
 {
     public class DealVM : TabViewBase
     {
+        public DealVM()
+        {
+            state = new IdleDeal() { DataContext = this };
+        }
+        public List<Deal> Deals { get { return DBMethods.GetAllDeals(); } }
+
+        
+
+
         public override RelayCommand GoAdd => new RelayCommand(obj => { });
     }
 }

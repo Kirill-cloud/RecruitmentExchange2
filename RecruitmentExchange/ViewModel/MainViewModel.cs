@@ -15,7 +15,7 @@ namespace RecruitmentExchange.ViewModel
         UserControl companyView = new TabContentView(new CompanyVM());
         UserControl roleView = new TabContentView(new RoleVM());
         UserControl vacancyView = new TabContentView(new VacancyVM());
-        UserControl applicantView = new TabContentView(new AplicantVM());
+        UserControl applicantView = new TabContentView(new ApplicantVM());
         UserControl dealView = new TabContentView(new DealVM());
         public UserControl CompanyView { get { return companyView; } }
         public UserControl RoleView { get { return roleView; } }

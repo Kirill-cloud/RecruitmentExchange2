@@ -11,5 +11,6 @@ namespace RecruitmentExchange.Model
         public int Id { get; set; }
         public Applicant Applicant { get; set; }
         public Vacancy Vacancy{ get; set; }
+        public Decimal Profit { get; set; }
     }
 }

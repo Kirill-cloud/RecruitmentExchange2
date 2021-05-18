@@ -3,10 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RecruitmentExchange.View.Deal"
+             xmlns:local="clr-namespace:RecruitmentExchange.View.Deal" xmlns:viewmodel="clr-namespace:RecruitmentExchange.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:DealVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <DataGrid ItemsSource="{Binding Deals}" SelectionMode="Single" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" SelectedItem="{Binding Selected}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Aplicant" Binding="{Binding Path=Applicant.Name}" />
+                <DataGridTextColumn Header="Vacancy" Binding="{Binding Path=Vacancy.Role.Name}" />
+                <DataGridTextColumn Header="Description" Binding="{Binding Path=Vacancy.Description}" />
+                <DataGridTextColumn Header="Profit" Binding="{Binding Path=Profit}" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
