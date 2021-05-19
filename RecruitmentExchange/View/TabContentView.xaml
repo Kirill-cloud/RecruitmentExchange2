@@ -12,10 +12,10 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <UserControl Content="{Binding State}" />
-        <StackPanel Grid.Row="1" Orientation="Horizontal">
-            <Button Command="{Binding GoAdd}" >Добавить удалить</Button>
-            <Button Command="{Binding Remove}" >Удалить</Button>
-            <Button >Изменить</Button>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center"  Orientation="Horizontal">
+            <Button Command="{Binding GoAdd}" > Добавить </Button>
+            <Button Command="{Binding GoRemove}" > Удалить </Button>
+            <Button Command="{Binding GoEdit}"> Изменить </Button>
         </StackPanel>
     </Grid>
 </UserControl>

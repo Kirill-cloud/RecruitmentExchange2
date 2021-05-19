@@ -41,7 +41,12 @@ namespace RecruitmentExchange.ViewModel
             get { return state; }
             set { state = value; OnPropertyChanged("State"); }
         }
-        public abstract RelayCommand GoAdd { get; }
+
+
+        public virtual RelayCommand GoAdd { get; }
+        public virtual RelayCommand Add { get; }
+        public virtual RelayCommand GoRemove{ get; }
+        public virtual RelayCommand Remove { get; }
 
     }
 }

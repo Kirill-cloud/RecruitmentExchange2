@@ -18,11 +18,45 @@ namespace RecruitmentExchange.ViewModel
         {
             state = new IdleRole() { DataContext = this };
         }
-
         public List<Role> Roles { get { return DBMethods.GetAllRoles(); } }
-        public int Id { get; set; }
+
+
+        public Role Selected { get; set; }
         public string Name { get; set; }
 
-        public override RelayCommand GoAdd => new RelayCommand(obj => { });
+
+        public override RelayCommand GoAdd => new RelayCommand(obj =>
+        {
+            State = new AddRole() { DataContext = this };
+        });
+
+        public override RelayCommand Add => new RelayCommand(obj =>
+        {
+            var newrole = new Role() { Name = Name };
+            DBMethods.AddRole(newrole);
+            State = new IdleRole();
+        });
+
+        public int VacancyCount { get; set; }
+        public int ApplicantCount { get; set; }
+
+        public override RelayCommand GoRemove => new RelayCommand(obj =>
+        {
+            if (Selected != null)
+            {
+                ApplicantCount = DBMethods.GetAllApplicants().Where(x => x.Role.Id == Selected.Id).Count();
+                VacancyCount = DBMethods.GetAllVacancies().Where(x => x.Role.Id == Selected.Id).Count();
+
+                State = new RemoveRole() { DataContext = this };
+            }
+        });
+        public override RelayCommand Remove => new RelayCommand(async obj =>
+        {
+            await DBMethods.RemoveRole(Selected);
+
+            State = new IdleRole() { DataContext = this };
+
+            Selected = null;
+        });
     }
 }

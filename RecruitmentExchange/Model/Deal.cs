@@ -9,8 +9,8 @@ namespace RecruitmentExchange.Model
     public class Deal
     {
         public int Id { get; set; }
-        public Applicant Applicant { get; set; }
-        public Vacancy Vacancy{ get; set; }
+        public virtual Applicant Applicant { get; set; }
+        public virtual Vacancy Vacancy{ get; set; }
         public Decimal Profit { get; set; }
     }
 }

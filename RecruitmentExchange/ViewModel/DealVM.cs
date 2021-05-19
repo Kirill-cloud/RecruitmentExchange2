@@ -19,9 +19,7 @@ namespace RecruitmentExchange.ViewModel
         {
             state = new IdleDeal() { DataContext = this };
         }
-        public List<Deal> Deals { get { return DBMethods.GetAllDeals(); } }
-
-        
+        public List<Deal> Deals { get{ return DBMethods.GetAllDeals().Result; } }
 
 
         public override RelayCommand GoAdd => new RelayCommand(obj => { });

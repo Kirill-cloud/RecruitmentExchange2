@@ -23,26 +23,11 @@ namespace RecruitmentExchange.AppData
 
             return "Done";
         }
-        public async static Task<string> RemoveCompany(Company company)
-        {
-
-            using (AppDBContext db = new())
-            {
-                if (company != null)
-                {
-                    db.Companies.Remove(company);
-                    await db.SaveChangesAsync();
-                }
-
-            }
-
-            return "Done";
-        }
         public static List<Company> GetAllCompanies()
         {
             using AppDBContext db = new();
 
-            return db.Companies.ToList<Company>();
+            return db.Companies.Include(c => c.Vacansies).ToList<Company>();
         }
         public static Company GetCompanyById(int id)
         {
@@ -50,6 +35,25 @@ namespace RecruitmentExchange.AppData
 
             return db.Companies.Find(id);
         }
+        public static async Task EditCompany(Company edited)
+        {
+            using AppDBContext db = new();
+            db.Companies.Update(edited);
+            await db.SaveChangesAsync();
+        }
+        public async static Task RemoveCompany(Company company)
+        {
+            using (AppDBContext db = new())
+            {
+                if (company != null)
+                {
+                    var x = db.Companies.Find(company.Id);
+                    db.Companies.Remove(x);
+                    await db.SaveChangesAsync();
+                }
+            }
+        }
+
         #endregion
 
         #region ForRole
@@ -61,10 +65,24 @@ namespace RecruitmentExchange.AppData
         }
         public static List<Role> GetAllRoles()
         {
-            AddRole(new Role() { Name = "Чел" + DateTime.Now.TimeOfDay });
-
             using AppDBContext db = new();
             return db.Roles.ToList<Role>();
+        }
+        public async static Task<string> RemoveRole(Role role)
+        {
+
+            using (AppDBContext db = new())
+            {
+                if (role != null)
+                {
+                    var x = db.Roles.Find(role.Id);
+                    db.Roles.Remove(x);
+                    await db.SaveChangesAsync();
+                }
+
+            }
+
+            return "Done";
         }
 
         #endregion
@@ -73,6 +91,14 @@ namespace RecruitmentExchange.AppData
         public static void AddVacany(Vacancy vacancy)
         {
             using AppDBContext db = new();
+
+            var role = db.Roles.Find(vacancy.Role.Id);
+            vacancy.Role = role;
+            var company = db.Companies.Find(vacancy.Company.Id);
+
+            vacancy.Company = company;
+
+
             db.Vacancies.Add(vacancy);
             db.SaveChanges();
         }
@@ -100,13 +126,21 @@ namespace RecruitmentExchange.AppData
             return db.Applicants.Include(x => x.Role).ToList();
         }
         #endregion
-        #region ForDeal
-        public static List<Deal> GetAllDeals()
-        {
-            using AppDBContext db = new();
 
-            return db.Deals.Include(x=>x.Applicant).Include(x=>x.Vacancy).Include(x => x.Vacancy.Role).ToList();
+        #region ForDeal
+        public static Task<List<Deal>> GetAllDeals()
+        {
+
+
+            return Task.Run(() =>
+            {
+                using AppDBContext db = new();
+                return db.Deals.Include(x => x.Applicant).Include(x => x.Vacancy).Include(x => x.Vacancy.Role).ToList();
+            }
+            );
         }
+
+
         #endregion
 
     }

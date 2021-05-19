@@ -14,7 +14,10 @@ namespace RecruitmentExchange.ViewModel
 {
     class VacancyVM : TabViewBase
     {
-
+        public VacancyVM()
+        {
+            State = new IdleVacancyView();
+        }
         public Company SelectedCompany { get; set; }
         public Role SelectedRole { get; set; }
         public string Description { get; set; }
@@ -33,20 +36,6 @@ namespace RecruitmentExchange.ViewModel
             }
         }
 
-        UserControl state = new IdleVacancyView();
-
-        public UserControl State
-        {
-            get
-            {
-                return state;
-            }
-            set
-            {
-                state = value;
-                OnPropertyChanged("State");
-            }
-        }
         public List<Vacancy> Vacancies
         {
             get
@@ -74,7 +63,7 @@ namespace RecruitmentExchange.ViewModel
                 return new RelayCommand(obj =>
                 {
 
-                    DBMethods.AddVacany(new Vacancy() { CompanyId = SelectedCompany.Id, RoleId = SelectedRole.Id, Description = Description});
+                    DBMethods.AddVacany(new Vacancy() { Company = SelectedCompany, Role = SelectedRole, Description = Description});
                     State = new IdleVacancyView();
                 });
             }

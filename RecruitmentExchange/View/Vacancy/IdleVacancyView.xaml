@@ -3,19 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:RecruitmentExchange.View.Vacancy"
+             xmlns:local="clr-namespace:RecruitmentExchange.View.Vacancy" xmlns:viewmodel="clr-namespace:RecruitmentExchange.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:VacancyVM}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <StackPanel>
-        <DataGrid ItemsSource="{Binding Vacancies}" >
+        <DataGrid ItemsSource="{Binding Vacancies}" SelectionMode="Single" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" SelectedItem="{Binding Selected}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Company" Binding="{Binding Path=Company.Name}" />
                 <DataGridTextColumn Header="Role" Binding="{Binding Path=Role.Name}" />
                 <DataGridTextColumn Header="Description" Binding="{Binding Path=Description}" />
             </DataGrid.Columns>
         </DataGrid>
-            <Button Command="{Binding AddVac}" Content="asd" />
-        </StackPanel>
     </Grid>
 </UserControl>
