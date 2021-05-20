@@ -58,5 +58,23 @@ namespace RecruitmentExchange.ViewModel
 
             Selected = null;
         });
+        public RelayCommand GoEdit => new RelayCommand(obj =>
+        {
+            if (Selected != null)
+            {
+                State = new EditRole() { DataContext = this };
+            }
+        });
+        public RelayCommand Edit => new RelayCommand(async obj =>
+        {
+            var editedRole = new Role() { Id = Selected.Id, Name = Name };
+            await DBMethods.EditRole(editedRole);
+
+            State = new IdleRole() { DataContext = this };
+
+            Selected = null;
+        });
+
+
     }
 }

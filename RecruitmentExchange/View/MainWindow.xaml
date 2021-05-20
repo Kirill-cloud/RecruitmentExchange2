@@ -47,6 +47,8 @@
         </Grid.RowDefinitions>
 
         <TabControl Grid.Row="1" TabStripPlacement="Left" SelectedIndex="{Binding Selected}" Grid.ColumnSpan="2" >
+
+               
             <TabItem Header="Companies"     Content="{Binding CompanyView}"  />
             <TabItem Header="Applicants"    Content="{Binding ApplicantView}" />
             <TabItem Header="Deals"         Content="{Binding DealView}" />

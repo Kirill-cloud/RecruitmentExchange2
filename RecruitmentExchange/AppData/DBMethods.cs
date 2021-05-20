@@ -85,6 +85,13 @@ namespace RecruitmentExchange.AppData
             return "Done";
         }
 
+        public static async Task EditRole(Role edited)
+        {
+            using AppDBContext db = new();
+            db.Roles.Update(edited);
+            await db.SaveChangesAsync();
+        }
+
         #endregion
 
         #region ForVacancy
