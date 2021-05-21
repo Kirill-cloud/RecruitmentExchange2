@@ -4,7 +4,7 @@ using System;
 
 namespace RecruitmentExchange.ViewModel
 {
-    internal class EditRoleVM : TabViewBase
+    public class EditRoleVM : TabViewBase
     {
         public override string TabName { get; set; } = "Редактирование Роли ";
 
@@ -58,12 +58,14 @@ namespace RecruitmentExchange.ViewModel
 
         private void Add()
         {
-            DBMethods.AddRole(role);
+            DBMethods db = new();
+            db.AddRole(role);
         }
 
         private void Edit()
         {
-            DBMethods.EditRole(role);
+            DBMethods db = new();
+            db.EditRole(role);
         }
 
         private void BoundRole()

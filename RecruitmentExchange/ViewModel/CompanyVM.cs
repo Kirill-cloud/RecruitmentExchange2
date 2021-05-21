@@ -48,7 +48,8 @@ namespace RecruitmentExchange.ViewModel
             get
             {
 
-                return DBMethods.GetAllCompanies();
+                DBMethods db = new();
+                return db.GetAllCompanies();
             }
         }
         //Update

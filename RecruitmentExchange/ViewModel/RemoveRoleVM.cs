@@ -23,9 +23,9 @@ namespace RecruitmentExchange.ViewModel
             origin = Origin;
             this.role = role;
             TabName += role.Name;
-
-            ApplicantCount = DBMethods.GetAllApplicants().Where(x => x.Role.Id == role.Id).Count();
-            VacancyCount = DBMethods.GetAllVacancies().Where(x => x.Role.Id == role.Id).Count();
+            DBMethods db = new DBMethods();
+            ApplicantCount = db.GetAllApplicants().Where(x => x.Role.Id == role.Id).Count();
+            VacancyCount = db.GetAllVacancies().Where(x => x.Role.Id == role.Id).Count();
         }
         public RelayCommand Remove
         {
@@ -33,7 +33,8 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    DBMethods.RemoveRole(role);
+                    DBMethods db = new();
+                    db.RemoveRole(role);
                     origin.State = origin;
                     origin.Selected = null;
                 });

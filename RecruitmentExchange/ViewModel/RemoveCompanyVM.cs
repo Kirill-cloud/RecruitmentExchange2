@@ -21,7 +21,10 @@ namespace RecruitmentExchange.ViewModel
             this.company = company;
             this.origin = origin;
 
-            VacancyCount = DBMethods.GetAllVacancies().Where(x => x.Company.Id == company.Id).Count();
+
+
+            DBMethods db = new();
+            VacancyCount = db.GetAllVacancies().Where(x => x.Company.Id == company.Id).Count();
         }
         public RelayCommand Remove
         {
@@ -29,7 +32,8 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                     {
-                        DBMethods.RemoveCompany(company);
+                        DBMethods db = new();
+                        db.RemoveCompany(company);
                         origin.State = origin;
                         origin.Selected = null;
                     });

@@ -12,12 +12,12 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class RoleVM : TabViewBase
+    public class RoleVM : TabViewBase
     {
         public override string TabName { get; set; } = "Роли";
 
 
-        public List<Role> Roles { get { return DBMethods.GetAllRoles(); } }
+        public List<Role> Roles { get { DBMethods db = new() ; return db.GetAllRoles(); } }
 
         TabViewBase state;
         public TabViewBase State { get { return state; } set { state = value; OnPropertyChanged("State"); } }

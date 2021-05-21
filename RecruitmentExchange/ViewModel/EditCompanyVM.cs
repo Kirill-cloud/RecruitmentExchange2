@@ -26,7 +26,7 @@ namespace RecruitmentExchange.ViewModel
             if (Company == null)
             {
                 Company = new Company();
-                TabName = "Добавление компании "+Company.Name;
+                TabName = "Добавление компании " + Company.Name;
             }
             else
             {
@@ -66,11 +66,13 @@ namespace RecruitmentExchange.ViewModel
 
         void Edit()
         {
-            DBMethods.EditCompany(Company);
+            DBMethods db = new();
+            db.EditCompany(Company);
         }
         void Add()
         {
-            DBMethods.AddCompany(Company);
+            DBMethods db = new();
+            db.AddCompany(Company);
         }
         void BoundCompany()
         {

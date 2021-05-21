@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.AppData
 {
-    public static class DBMethods
+    public class DBMethods
     {
 
         #region ForCompany
-        public static string AddCompany(Company company)
+        public string AddCompany(Company company)
         {
 
             using (AppDBContext db = new())
@@ -23,25 +23,28 @@ namespace RecruitmentExchange.AppData
 
             return "Done";
         }
-        public static List<Company> GetAllCompanies()
+        public List<Company> GetAllCompanies()
         {
             using AppDBContext db = new();
 
             return db.Companies.Include(c => c.Vacansies).ToList<Company>();
         }
-        public static Company GetCompanyById(int id)
+
+
+
+        public Company GetCompanyById(int id)
         {
             using AppDBContext db = new();
 
             return db.Companies.Find(id);
         }
-        public static async Task EditCompany(Company edited)
+        public async Task EditCompany(Company edited)
         {
             using AppDBContext db = new();
             db.Companies.Update(edited);
             await db.SaveChangesAsync();
         }
-        public static void RemoveCompany(Company company)
+        public void RemoveCompany(Company company)
         {
             using (AppDBContext db = new())
             {
@@ -56,18 +59,21 @@ namespace RecruitmentExchange.AppData
         #endregion
 
         #region ForRole
-        public static void AddRole(Role role)
+        public void AddRole(Role role)
         {
             using AppDBContext db = new();
             db.Roles.Add(role);
             db.SaveChanges();
         }
-        public static List<Role> GetAllRoles()
+
+
+
+        public List<Role> GetAllRoles()
         {
             using AppDBContext db = new();
             return db.Roles.ToList<Role>();
         }
-        public async static Task<string> RemoveRole(Role role)
+        public async Task<string> RemoveRole(Role role)
         {
 
             using (AppDBContext db = new())
@@ -84,7 +90,7 @@ namespace RecruitmentExchange.AppData
             return "Done";
         }
 
-        public static async Task EditRole(Role edited)
+        public async Task EditRole(Role edited)
         {
             using AppDBContext db = new();
             db.Roles.Update(edited);
@@ -94,7 +100,7 @@ namespace RecruitmentExchange.AppData
         #endregion
 
         #region ForVacancy
-        public static void AddVacany(Vacancy vacancy)
+        public void AddVacany(Vacancy vacancy)
         {
             using AppDBContext db = new();
 
@@ -108,24 +114,48 @@ namespace RecruitmentExchange.AppData
             db.Vacancies.Add(vacancy);
             db.SaveChanges();
         }
-        public static List<Vacancy> GetAllVacancies()
+        public void EditVacancy(Vacancy vacancy)
+        {
+            using AppDBContext db = new();
+            db.Vacancies.Update(new Vacancy()
+            {
+                Id = vacancy.Id,
+                CompanyId = vacancy.Company.Id,
+                RoleId = vacancy.Role.Id,
+                Description = vacancy.Description
+            });
+            db.SaveChanges();
+        }
+
+        public List<Vacancy> GetAllVacancies()
         {
             using AppDBContext db = new();
             var x = db.Vacancies.Include(x => x.Role).Include(x => x.Company).ToList();
             return x;
         }
 
-        public static Role GetRoleById(int id)
+        public Role GetRoleById(int id)
         {
             using AppDBContext db = new();
 
             return db.Roles.FirstOrDefault<Role>(x => x.Id == id);
         }
+        public void RemoveVacancy(Vacancy vacancy)
+        {
+            using (AppDBContext db = new())
+            {
+                if (vacancy != null)
+                {
+                    db.Vacancies.Remove(vacancy);
+                    db.SaveChanges();
+                }
+            }
+        }
 
         #endregion
 
         #region ForApplicant
-        public static List<Applicant> GetAllApplicants()
+        public List<Applicant> GetAllApplicants()
         {
             using AppDBContext db = new();
 
@@ -134,7 +164,7 @@ namespace RecruitmentExchange.AppData
         #endregion
 
         #region ForDeal
-        public static Task<List<Deal>> GetAllDeals()
+        public Task<List<Deal>> GetAllDeals()
         {
 
 

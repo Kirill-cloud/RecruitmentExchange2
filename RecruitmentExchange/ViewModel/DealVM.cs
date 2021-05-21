@@ -17,15 +17,47 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Сделки";
 
-        public TabViewBase State { get; set; }
+        public Deal Selected { get; set; }
+
+        TabViewBase state;
+        public TabViewBase State
+        {
+            get
+            { return state; }
+            set { state = value; OnPropertyChanged("State"); }
+        }
 
         public DealVM()
         {
             State = this;
         }
-        public List<Deal> Deals { get{ return DBMethods.GetAllDeals().Result; } }
+        public List<Deal> Deals
+        {
+            get
+            {
+                DBMethods db = new();
+                return db.GetAllDeals().Result;
+            }
+        }
 
 
-        public RelayCommand GoAdd => new RelayCommand(obj => { });
+        public RelayCommand GoAdd => new RelayCommand(obj =>
+        {
+            State = new EditDealVM();
+        });
+
+
+        public RelayCommand Cancel
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    State = this;
+                    Selected = null;
+                });
+
+            }
+        }
     }
 }

@@ -17,9 +17,6 @@
     <Application.Resources>
         <ResourceDictionary>
 
-
-
-
             <DataTemplate DataType="{x:Type viewModel:RoleVM}" >
                 <viewR:IdleRole/>
             </DataTemplate>
@@ -30,25 +27,43 @@
                 <viewR:RemoveRole/>
             </DataTemplate>
 
+            
 
             <DataTemplate DataType="{x:Type viewModel:ApplicantVM}" >
                 <viewA:IdleApplicant/>
             </DataTemplate>
-            
-            
+            <DataTemplate DataType="{x:Type viewModel:EditApplicantVM}" >
+                <viewA:EditApplicant/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:RemoveApplicantVM}" >
+                <viewA:RemoveApplicant/>
+            </DataTemplate>
+
+
+
             <DataTemplate DataType="{x:Type viewModel:DealVM}" >
                 <viewD:IdleDeal/>
             </DataTemplate>
-            
-            
-            
+            <DataTemplate DataType="{x:Type viewModel:EditDealVM}" >
+                <viewD:EditDeal/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:RemoveDealVM}" >
+                <viewD:RemoveDeal/>
+            </DataTemplate>
+
+
+
             <DataTemplate DataType="{x:Type viewModel:VacancyVM}" >
                 <viewV:IdleVacancyView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:EditVacancyVM}" >
                 <viewV:EditVacancy/>
             </DataTemplate>
-
+            <DataTemplate DataType="{x:Type viewModel:RemoveVacancyVM}" >
+                <viewV:RemoveVacancy/>
+            </DataTemplate>
+            
+            
 
             <DataTemplate DataType="{x:Type viewModel:CompanyVM}" >
                 <view:IdleCompanyView/>
@@ -61,7 +76,6 @@
             <DataTemplate DataType="{x:Type viewModel:RemoveCompanyVM}" >
                 <viewC:RemoveCompany/>
             </DataTemplate>
-
 
         </ResourceDictionary>
     </Application.Resources>
