@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RecruitmentExchange.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,17 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class RemoveApplicantVM : TabViewBase
+    public class RemoveApplicantVM : TabViewBase
     {
-        public override string TabName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private Applicant selected;
+        private ApplicantVM applicantVM;
+
+        public RemoveApplicantVM(Applicant selected, ApplicantVM applicantVM)
+        {
+            this.selected = selected;
+            this.applicantVM = applicantVM;
+        }
+
+        public override string TabName { get; set; } = "удалть искателя приключений";
     }
 }

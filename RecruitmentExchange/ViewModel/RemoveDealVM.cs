@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RecruitmentExchange.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,16 @@ namespace RecruitmentExchange.ViewModel
 {
     class RemoveDealVM : TabViewBase
     {
-        public override string TabName
+        public override string TabName { get; set; } = "Удать сделку";
+
+        private Deal selected;
+        private DealVM dealVM;
+
+        public RemoveDealVM(Deal selected, DealVM dealVM)
         {
-            get => throw new NotImplementedException(); set => throw new NotImplementedException();
+            this.selected = selected;
+            this.dealVM = dealVM;
         }
+
     }
 }

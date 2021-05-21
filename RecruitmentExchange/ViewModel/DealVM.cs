@@ -43,9 +43,17 @@ namespace RecruitmentExchange.ViewModel
 
         public RelayCommand GoAdd => new RelayCommand(obj =>
         {
-            State = new EditDealVM();
+            State = new EditDealVM(null, this);
+        });
+        public RelayCommand GoEdit => new RelayCommand(obj =>
+        {
+            State = new EditDealVM(Selected, this);
         });
 
+        public RelayCommand GoRemove => new RelayCommand(obj =>
+        {
+            State = new RemoveDealVM(Selected, this);
+        });
 
         public RelayCommand Cancel
         {

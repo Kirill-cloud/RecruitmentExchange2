@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class ApplicantVM : TabViewBase
+    public class ApplicantVM : TabViewBase
     {
         public override string TabName { get; set; } = "Соискатели";
 
@@ -40,9 +40,15 @@ namespace RecruitmentExchange.ViewModel
         {
             State = new EditApplicantVM(null,this);
         });
+
         public RelayCommand GoEdit => new RelayCommand(obj =>
         {
             State = new EditApplicantVM(Selected,this);
+        });
+
+        public RelayCommand GoRemove => new RelayCommand(obj =>
+        {
+            State = new RemoveApplicantVM(Selected, this);
         });
 
         public RelayCommand Cancel

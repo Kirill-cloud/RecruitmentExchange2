@@ -90,6 +90,8 @@ namespace RecruitmentExchange.AppData
             return "Done";
         }
 
+
+
         public async Task EditRole(Role edited)
         {
             using AppDBContext db = new();
@@ -134,12 +136,12 @@ namespace RecruitmentExchange.AppData
             return x;
         }
 
-        public Role GetRoleById(int id)
-        {
-            using AppDBContext db = new();
+        //public Role GetRoleById(int id)
+        //{
+        //    using AppDBContext db = new();
 
-            return db.Roles.FirstOrDefault<Role>(x => x.Id == id);
-        }
+        //    return db.Roles.FirstOrDefault<Role>(x => x.Id == id);
+        //}
         public void RemoveVacancy(Vacancy vacancy)
         {
             using (AppDBContext db = new())
@@ -160,6 +162,38 @@ namespace RecruitmentExchange.AppData
             using AppDBContext db = new();
 
             return db.Applicants.Include(x => x.Role).ToList();
+        }
+        internal void AddApplicant(Applicant applicant)
+        {
+            using AppDBContext db = new();
+
+            var role = db.Roles.Find(applicant.Role.Id);
+
+
+            db.Applicants.Add(new Applicant()
+            {
+                Name = applicant.Name,
+                Role = role,
+                Description = applicant.Description,
+                Salary = applicant.Salary,
+                IsActive = applicant.IsActive
+            });
+
+            db.SaveChanges();
+        }
+        internal void EditApplicant(Applicant applicant)
+        {
+            using AppDBContext db = new();
+            db.Applicants.Update(new Applicant()
+            {
+                Id = applicant.Id,
+                Name = applicant.Name,
+                RoleId = applicant.Role.Id,
+                Description = applicant.Description,
+                Salary = applicant.Salary,
+                IsActive = applicant.IsActive
+            });
+            db.SaveChanges();
         }
         #endregion
 
