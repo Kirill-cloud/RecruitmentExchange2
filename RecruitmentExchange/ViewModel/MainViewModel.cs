@@ -12,16 +12,6 @@ namespace RecruitmentExchange.ViewModel
 {
     class MainViewModel : INotifyPropertyChanged
     {
-        UserControl companyView => new TabContentView(new CompanyVM());
-        UserControl roleView => new TabContentView(new RoleVM());
-        UserControl vacancyView => new TabContentView(new VacancyVM());
-        UserControl applicantView => new TabContentView(new ApplicantVM());
-        UserControl dealView => new TabContentView(new DealVM());
-        public UserControl CompanyView { get { return companyView; } }
-        public UserControl RoleView { get { return roleView; } }
-        public UserControl VacancyView { get { return vacancyView; } }
-        public UserControl ApplicantView { get { return applicantView; } }
-        public UserControl DealView { get { return dealView; } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string prop = "")
@@ -29,24 +19,22 @@ namespace RecruitmentExchange.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
-        private int selected;
+        public TabViewBase SelectedTab { get; set; }
+        private List<TabViewBase> tabsList=new List<TabViewBase>();
 
-        public int Selected
+        public List<TabViewBase> TabsList
         {
-            get
-            {
-                return selected;
-            }
-            set
-            {
-                selected = value;
+            get { return tabsList; }
+            set { tabsList = value; }
+        }
 
-                OnPropertyChanged("CompanyView");
-                OnPropertyChanged("RoleView");
-                OnPropertyChanged("VacancyView");
-                OnPropertyChanged("ApplicantView");
-                OnPropertyChanged("DealView");
-            }
+        public MainViewModel()
+        {
+            tabsList.Add(new CompanyVM());
+            tabsList.Add(new RoleVM());
+            tabsList.Add(new VacancyVM());
+            tabsList.Add(new ApplicantVM());
+            tabsList.Add(new DealVM());
         }
 
     }

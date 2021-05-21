@@ -15,13 +15,15 @@ namespace RecruitmentExchange.ViewModel
 {
     public class DealVM : TabViewBase
     {
+        public override string TabName { get; set; } = "Сделки";
+
         public DealVM()
         {
-            state = new IdleDeal() { DataContext = this };
+            //state = new IdleDeal() { DataContext = this };
         }
         public List<Deal> Deals { get{ return DBMethods.GetAllDeals().Result; } }
 
 
-        public override RelayCommand GoAdd => new RelayCommand(obj => { });
+        public RelayCommand GoAdd => new RelayCommand(obj => { });
     }
 }

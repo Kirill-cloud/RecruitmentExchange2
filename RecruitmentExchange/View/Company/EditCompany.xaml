@@ -29,6 +29,7 @@
     <Grid>
 
         <StackPanel Margin="100,30"  MinWidth="100" >
+            <Label Content="{Binding TabName}" FontSize="26" />
             <Label Content="Name" />
             <TextBox Text="{Binding Name}" />
             <Label Content="Focus" />
@@ -38,6 +39,6 @@
             <Label Content="Phone" />
             <TextBox Text="{Binding Phone}" />
         </StackPanel>
-        <Button VerticalAlignment="Bottom" Width="100" Margin="30" Command="{Binding Edit}" >Edit</Button>
+        <Button VerticalAlignment="Bottom" Width="100" Margin="30" Command="{Binding AddOrEdit}" >Сохранить</Button>
     </Grid>
 </UserControl>

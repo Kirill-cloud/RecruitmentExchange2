@@ -13,7 +13,12 @@ namespace RecruitmentExchange.ViewModel
 {
     abstract public class TabViewBase : INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        public abstract string TabName { get; set; }
 
+
+
+
+        // Observable
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
@@ -34,19 +39,5 @@ namespace RecruitmentExchange.ViewModel
             return errors[propertyName];
         }
         public bool HasErrors => errors.Count > 0;
-        
-        protected UserControl state;
-        public UserControl State
-        {
-            get { return state; }
-            set { state = value; OnPropertyChanged("State"); }
-        }
-
-
-        public virtual RelayCommand GoAdd { get; }
-        public virtual RelayCommand Add { get; }
-        public virtual RelayCommand GoRemove{ get; }
-        public virtual RelayCommand Remove { get; }
-
     }
 }

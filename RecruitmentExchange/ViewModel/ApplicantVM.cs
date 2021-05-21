@@ -11,11 +11,13 @@ namespace RecruitmentExchange.ViewModel
 {
     class ApplicantVM : TabViewBase
     {
+        public override string TabName { get; set; } = "Соискатели";
+
         public List<Applicant> Applicants { get { return DBMethods.GetAllApplicants(); } }
         public ApplicantVM()
         {
-            state = new IdleApplicant() { DataContext = this};
+            //state = new IdleApplicant() { DataContext = this};
         }
-        public override RelayCommand GoAdd => new RelayCommand(obj => { });
+        public RelayCommand GoAdd => new RelayCommand(obj => { });
     }
 }

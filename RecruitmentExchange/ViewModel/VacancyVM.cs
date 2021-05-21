@@ -14,60 +14,62 @@ namespace RecruitmentExchange.ViewModel
 {
     class VacancyVM : TabViewBase
     {
-        public VacancyVM()
-        {
-            State = new IdleVacancyView();
-        }
-        public Company SelectedCompany { get; set; }
-        public Role SelectedRole { get; set; }
-        public string Description { get; set; }
-        public List<Company> Companies
-        {
-            get
-            {
-                return DBMethods.GetAllCompanies();
-            }
-        }
-        public List<Role> Roles
-        {
-            get
-            {
-                return DBMethods.GetAllRoles();
-            }
-        }
+        public override string TabName { get; set; } = "Вакансии";
 
-        public List<Vacancy> Vacancies
-        {
-            get
-            {
-                return DBMethods.GetAllVacancies();
-            }
-        }
+        //public VacancyVM()
+        //{
+        //    State = new IdleVacancyView();
+        //}
+        //public Company SelectedCompany { get; set; }
+        //public Role SelectedRole { get; set; }
+        //public string Description { get; set; }
+        //public List<Company> Companies
+        //{
+        //    get
+        //    {
+        //        return DBMethods.GetAllCompanies();
+        //    }
+        //}
+        //public List<Role> Roles
+        //{
+        //    get
+        //    {
+        //        return DBMethods.GetAllRoles();
+        //    }
+        //}
+
+        //public List<Vacancy> Vacancies
+        //{
+        //    get
+        //    {
+        //        return DBMethods.GetAllVacancies();
+        //    }
+        //}
 
 
-        public override RelayCommand GoAdd
-        {
-            get
-            {
-                return new RelayCommand(obj =>
-                {
-                    State = new AddVacancy();
-                });
-            }
-        }
+        //public override RelayCommand GoAdd
+        //{
+        //    get
+        //    {
+        //        return new RelayCommand(obj =>
+        //        {
+        //            State = new AddVacancy();
+        //        });
+        //    }
+        //}
 
-        public RelayCommand Add
-        {
-            get
-            {
-                return new RelayCommand(obj =>
-                {
+        //public RelayCommand Add
+        //{
+        //    get
+        //    {
+        //        return new RelayCommand(obj =>
+        //        {
 
-                    DBMethods.AddVacany(new Vacancy() { Company = SelectedCompany, Role = SelectedRole, Description = Description});
-                    State = new IdleVacancyView();
-                });
-            }
-        }
+        //            DBMethods.AddVacany(new Vacancy() { Company = SelectedCompany, Role = SelectedRole, Description = Description});
+        //            State = new IdleVacancyView();
+        //        });
+        //    }
+        //}
 
     }
 }

@@ -8,6 +8,10 @@ namespace RecruitmentExchange.View
     /// </summary>
     public partial class TabContentView : UserControl
     {
+        public TabContentView()
+        {
+            InitializeComponent();
+        }
         public TabContentView(TabViewBase context)
         {
             InitializeComponent();

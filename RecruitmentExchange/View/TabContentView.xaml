@@ -5,17 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RecruitmentExchange.View" xmlns:viewmodel="clr-namespace:RecruitmentExchange.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:TabViewBase}"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="50" d:DesignWidth="800">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-        <UserControl Content="{Binding State}" />
         <StackPanel Grid.Row="1" HorizontalAlignment="Center"  Orientation="Horizontal">
             <Button Command="{Binding GoAdd}" > Добавить </Button>
             <Button Command="{Binding GoRemove}" > Удалить </Button>
-            <Button Command="{Binding GoEdit}"> Изменить </Button>
+            <Button Command="{Binding GoEdit}">Изменить</Button>
+            <Button Command="{Binding Cancel}">На главную</Button>
         </StackPanel>
     </Grid>
 </UserControl>

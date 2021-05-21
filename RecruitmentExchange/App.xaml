@@ -2,8 +2,46 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RecruitmentExchange"
-             StartupUri="View/MainWindow.xaml">
+             StartupUri="View/MainWindow.xaml"
+             xmlns:view="clr-namespace:RecruitmentExchange.View"
+             xmlns:viewC="clr-namespace:RecruitmentExchange.View.Company"
+             xmlns:viewA="clr-namespace:RecruitmentExchange.View.Applicant"
+             xmlns:viewR="clr-namespace:RecruitmentExchange.View.Role"
+             xmlns:viewV="clr-namespace:RecruitmentExchange.View.Vacancy"
+             xmlns:viewD="clr-namespace:RecruitmentExchange.View.Deal"
+             
+             
+             xmlns:viewModel="clr-namespace:RecruitmentExchange.ViewModel"
+             
+             >
     <Application.Resources>
+        <ResourceDictionary>
 
+            <DataTemplate DataType="{x:Type viewModel:CompanyVM}" >
+                <view:IdleCompanyView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:RoleVM}" >
+                <viewR:IdleRole/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:ApplicantVM}" >
+                <viewA:IdleApplicant/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:DealVM}" >
+                <viewD:IdleDeal/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:VacancyVM}" >
+                <viewV:IdleVacancyView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:EditCompanyVM}" >
+                <viewC:EditCompany/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:RemoveCompanyVM}" >
+                <viewC:RemoveCompany/>
+            </DataTemplate>
+
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

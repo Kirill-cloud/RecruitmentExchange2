@@ -16,47 +16,29 @@ namespace RecruitmentExchange.ViewModel
 {
     public class CompanyVM : TabViewBase
     {
+        public override string TabName { get; set; } = "Компании";
+
+        TabViewBase state;
+        public TabViewBase State
+        {
+            get
+            { return state; }
+            set { state = value; OnPropertyChanged("State"); }
+        }
         public CompanyVM()
         {
-            state = new IdleCompanyView() { DataContext = this };
+            State = this;
         }
-        public string Name { get; set; }
-        public string Focus { get; set; }
-        public string Address { get; set; }
-        public string Phone { get; set; }
-
         public Company Selected { get; set; }
         //Create
-        public override RelayCommand GoAdd
+        public RelayCommand GoAdd
         {
             get
             {
                 return new RelayCommand(obj =>
                 {
-                    State = new AddCompany() { DataContext = this };
 
-                });
-            }
-        }
-        public override RelayCommand Add
-        {
-            get
-            {
-                return new RelayCommand(obj =>
-                {
-                    if (IsValid())
-                    {
-                        DBMethods.AddCompany(new Company()
-                        {
-                            Name = Name,
-                            Address = Address,
-                            FocusedOn = Focus,
-                            Phone = Phone,
-
-                        });
-                        State = new IdleCompanyView() { DataContext = this };
-                    }
-
+                    State = new EditCompanyVM(null, this);
                 });
             }
         }
@@ -78,36 +60,13 @@ namespace RecruitmentExchange.ViewModel
                 {
                     if (Selected != null)
                     {
-                        Name = Selected.Name;
-                        Focus = Selected.FocusedOn;
-                        Address = Selected.Address;
-                        Phone = Selected.Phone;
-
-                        State = new EditCompany() { DataContext = this };
-                    }
-                });
-            }
-        }
-        public RelayCommand Edit
-        {
-            get
-            {
-                return new RelayCommand(async obj =>
-                {
-                    if (IsValid())
-                    {
-                        var edited = new Company() { Id = Selected.Id, Name = Name, FocusedOn = Focus, Address = Address, Phone = Phone };
-                        await DBMethods.EditCompany(edited);
-
-                        State = new IdleCompanyView() { DataContext = this };
-                        Selected = null;
+                        State = new EditCompanyVM(Selected, this);
                     }
                 });
             }
         }
         //Delete
-        public int VacancyCount { get; set; }
-        public override RelayCommand GoRemove
+        public RelayCommand GoRemove
         {
             get
             {
@@ -115,76 +74,24 @@ namespace RecruitmentExchange.ViewModel
                 {
                     if (Selected != null)
                     {
-                        VacancyCount = Selected.Vacansies.Count;
-
-                        State = new RemoveCompany() { DataContext = this };
+                        State = new RemoveCompanyVM(Selected, this);
                     }
                 });
             }
         }
-        public override RelayCommand Remove
-        {
-            get
-            {
-                return new RelayCommand(async obj =>
-                {
 
-                    await DBMethods.RemoveCompany(Selected);
-
-                    State = new IdleCompanyView() { DataContext = this };
-
-                    Selected = null;
-
-                });
-            }
-        }
         public RelayCommand Cancel
         {
             get
             {
                 return new RelayCommand(obj =>
                 {
-                    State = new IdleCompanyView() { DataContext = this };
+                    State = this;
                     Selected = null;
                 });
 
             }
         }
-        private bool IsValid()
-        {
-            Validate();
 
-            return (errors.Count == 0);
-        }
-        void Validate()
-        {
-            errors.Clear();
-
-            if (Name == null || Name == "")
-            {
-                errors.Add("Name", new List<string>() { "empty" });
-                RaiseErrorsChanged("Name");
-            }
-            if (Focus == null || Focus == "")
-            {
-                errors.Add("Focus", new List<string>() { "empty" });
-                RaiseErrorsChanged("Focus");
-            }
-            if (Address == null || Address == "")
-            {
-                errors.Add("Address", new List<string>() { "empty" });
-                RaiseErrorsChanged("Address");
-            }
-            if (Phone == null || Phone == "")
-            {
-                errors.Add("Phone", new List<string>() { "empty" });
-                RaiseErrorsChanged("Phone");
-            }
-
-            RaiseErrorsChanged("Name");
-            RaiseErrorsChanged("Focus");
-            RaiseErrorsChanged("Address");
-            RaiseErrorsChanged("Phone");
-        }
     }
 }
