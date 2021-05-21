@@ -17,9 +17,11 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Сделки";
 
+        public TabViewBase State { get; set; }
+
         public DealVM()
         {
-            //state = new IdleDeal() { DataContext = this };
+            State = this;
         }
         public List<Deal> Deals { get{ return DBMethods.GetAllDeals().Result; } }
 

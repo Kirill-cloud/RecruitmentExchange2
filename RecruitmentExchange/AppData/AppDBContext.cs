@@ -30,6 +30,8 @@ namespace RecruitmentExchange.AppData
                         .HasOne(c => c.Role)
                         .WithMany(t => t.Vacancies)
                         .OnDelete(DeleteBehavior.Cascade);
+
+
         }
 
     }

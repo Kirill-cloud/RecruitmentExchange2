@@ -41,15 +41,14 @@ namespace RecruitmentExchange.AppData
             db.Companies.Update(edited);
             await db.SaveChangesAsync();
         }
-        public async static Task RemoveCompany(Company company)
+        public static void RemoveCompany(Company company)
         {
             using (AppDBContext db = new())
             {
                 if (company != null)
                 {
-                    var x = db.Companies.Find(company.Id);
-                    db.Companies.Remove(x);
-                    await db.SaveChangesAsync();
+                    db.Companies.Remove(company);
+                    db.SaveChanges();
                 }
             }
         }

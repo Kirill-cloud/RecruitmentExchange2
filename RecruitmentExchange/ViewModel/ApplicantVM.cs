@@ -14,9 +14,11 @@ namespace RecruitmentExchange.ViewModel
         public override string TabName { get; set; } = "Соискатели";
 
         public List<Applicant> Applicants { get { return DBMethods.GetAllApplicants(); } }
+        public TabViewBase State { get; set; }
+
         public ApplicantVM()
         {
-            //state = new IdleApplicant() { DataContext = this};
+            State = this;
         }
         public RelayCommand GoAdd => new RelayCommand(obj => { });
     }

@@ -16,66 +16,67 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Роли";
 
-        //public RoleVM()
-        //{
-        //    state = new IdleRole() { DataContext = this };
-        //}
-        //public List<Role> Roles { get { return DBMethods.GetAllRoles(); } }
 
+        public List<Role> Roles { get { return DBMethods.GetAllRoles(); } }
 
-        //public Role Selected { get; set; }
-        //public string Name { get; set; }
+        TabViewBase state;
+        public TabViewBase State { get { return state; } set { state = value; OnPropertyChanged("State"); } }
 
+        public RoleVM()
+        {
+            State = this;
+        }
 
-        //public override RelayCommand GoAdd => new RelayCommand(obj =>
-        //{
-        //    State = new AddRole() { DataContext = this };
-        //});
+        public Role Selected { get; set; }
 
-        //public override RelayCommand Add => new RelayCommand(obj =>
-        //{
-        //    var newrole = new Role() { Name = Name };
-        //    DBMethods.AddRole(newrole);
-        //    State = new IdleRole();
-        //});
+        public RelayCommand GoAdd 
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
 
-        //public int VacancyCount { get; set; }
-        //public int ApplicantCount { get; set; }
+                    State = new EditRoleVM(null, this);
 
-        //public override RelayCommand GoRemove => new RelayCommand(obj =>
-        //{
-        //    if (Selected != null)
-        //    {
-        //        ApplicantCount = DBMethods.GetAllApplicants().Where(x => x.Role.Id == Selected.Id).Count();
-        //        VacancyCount = DBMethods.GetAllVacancies().Where(x => x.Role.Id == Selected.Id).Count();
+                });
+            }
+        }
+        public RelayCommand GoEdit
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    if (Selected!=null)
+                    {
+                        State = new EditRoleVM(Selected, this);
 
-        //        State = new RemoveRole() { DataContext = this };
-        //    }
-        //});
-        //public override RelayCommand Remove => new RelayCommand(async obj =>
-        //{
-        //    await DBMethods.RemoveRole(Selected);
+                    }
 
-        //    State = new IdleRole() { DataContext = this };
+                });
+            }
+        }
 
-        //    Selected = null;
-        //});
-        //public RelayCommand GoEdit => new RelayCommand(obj =>
-        //{
-        //    if (Selected != null)
-        //    {
-        //        State = new EditRole() { DataContext = this };
-        //    }
-        //});
-        //public RelayCommand Edit => new RelayCommand(async obj =>
-        //{
-        //    var editedRole = new Role() { Id = Selected.Id, Name = Name };
-        //    await DBMethods.EditRole(editedRole);
+        public RelayCommand GoRemove => new RelayCommand(obj =>
+        {
+            if (Selected != null)
+            {
+                State = new RemoveRoleVM(Selected,this);
+            }
+        });
 
-        //    State = new IdleRole() { DataContext = this };
+        public RelayCommand Cancel
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    State = this;
+                    Selected = null;
+                });
 
-        //    Selected = null;
-        //});
+            }
+        }
 
 
     }

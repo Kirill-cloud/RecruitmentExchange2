@@ -8,13 +8,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150" >
-            <WrapPanel>
-                <Label Margin="0,0,0,50" FontSize="24" Content="Редактирование роли " ></Label>
-                <Label Content="{Binding Selected.Name}" />
-            </WrapPanel>
+            
+            <Label Content="{Binding TabName}" FontSize="26" />
             <Label Content="Name" />
             <TextBox Text="{Binding Name}" />
-            <Button Margin="5" Command="{Binding Edit}" >Изменить</Button>
+            <Button Margin="5" Command="{Binding AddOrEdit}" >Изменить</Button>
+            
         </StackPanel>
     </Grid>
 </UserControl>

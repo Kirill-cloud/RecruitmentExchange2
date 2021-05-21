@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace RecruitmentExchange.View.Role
+namespace RecruitmentExchange.View.Vacancy
 {
     /// <summary>
-    /// Логика взаимодействия для AddRole.xaml
+    /// Логика взаимодействия для EditVacancy.xaml
     /// </summary>
-    public partial class AddRole : UserControl
+    public partial class EditVacancy : UserControl
     {
-        public AddRole()
+        public EditVacancy()
         {
             InitializeComponent();
         }

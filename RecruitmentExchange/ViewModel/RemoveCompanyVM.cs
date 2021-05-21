@@ -11,6 +11,8 @@ namespace RecruitmentExchange.ViewModel
     class RemoveCompanyVM : TabViewBase
     {
         public override string TabName { get; set; }
+
+        public int VacancyCount { get; set; }
         Company company;
         CompanyVM origin;
         public RemoveCompanyVM(Company company, CompanyVM origin)
@@ -18,6 +20,8 @@ namespace RecruitmentExchange.ViewModel
             TabName = "Удаление компании " + company.Name;
             this.company = company;
             this.origin = origin;
+
+            VacancyCount = DBMethods.GetAllVacancies().Where(x => x.Company.Id == company.Id).Count();
         }
         public RelayCommand Remove
         {
@@ -26,7 +30,7 @@ namespace RecruitmentExchange.ViewModel
                 return new RelayCommand(obj =>
                     {
                         DBMethods.RemoveCompany(company);
-                        origin.State = new CompanyVM();
+                        origin.State = origin;
                         origin.Selected = null;
                     });
             }

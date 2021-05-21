@@ -14,5 +14,6 @@ namespace RecruitmentExchange.Model
         public string Address { get; set; }
         public string Phone { get; set; }
         public List<Vacancy> Vacansies { get; set; }
+        public List<Deal> Deals { get; set; }
     }
 }
