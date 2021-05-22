@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center">
+            <Label Content="{Binding TabName}" />
+            <Button Command="{Binding Remove}" >Продолжить</Button>
+        </StackPanel>
     </Grid>
 </UserControl>

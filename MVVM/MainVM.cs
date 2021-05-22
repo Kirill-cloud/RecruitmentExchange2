@@ -8,7 +8,7 @@ namespace MVVM
 {
     class MainVM
     {
-        IEnumerable<VMBase> viewModels;
+        readonly IEnumerable<VMBase> viewModels;
         public IEnumerable<VMBase> ViewModels { get { return viewModels; } }
         public MainVM()
         {

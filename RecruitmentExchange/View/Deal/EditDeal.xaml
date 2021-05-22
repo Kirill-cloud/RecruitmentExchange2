@@ -7,6 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="{Binding TabName}" FontSize="26" />
+            <Label>Компания</Label>
+            <ComboBox ItemsSource="{Binding Companies}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedCompany}" />
+            <Label>Вакансия</Label>
+            <ComboBox ItemsSource="{Binding Vacancies}" DisplayMemberPath="Description" SelectedItem="{Binding SelectedVacancy}" />
+            <Label>Соискатель</Label>
+            <ComboBox ItemsSource="{Binding Applicants}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedApplicant}" />
             
+            <Button Command="{Binding AddOrEdit}" >Сохранить</Button>
+        </StackPanel>
     </Grid>
 </UserControl>

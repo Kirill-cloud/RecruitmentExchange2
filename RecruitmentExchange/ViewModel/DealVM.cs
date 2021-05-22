@@ -33,7 +33,7 @@ namespace RecruitmentExchange.ViewModel
         }
         public List<Deal> Deals
         {
-            get
+            get 
             {
                 DBMethods db = new();
                 return db.GetAllDeals().Result;

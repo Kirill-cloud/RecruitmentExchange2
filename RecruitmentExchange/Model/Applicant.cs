@@ -13,7 +13,7 @@ namespace RecruitmentExchange.Model
         public virtual Role Role { get; set; }
         public int RoleId { get; set; }
         public string Description { get; set; }
-        public double Salary{ get; set; }
+        public Decimal Salary{ get; set; }
         public bool IsActive { get; set; }
 
     }

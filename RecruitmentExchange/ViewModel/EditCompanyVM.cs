@@ -95,22 +95,22 @@ namespace RecruitmentExchange.ViewModel
             if (Name == null || Name == "")
             {
                 errors.Add("Name", new List<string>() { "empty" });
-                RaiseErrorsChanged("Name");
+                RaiseErrorsChanged(nameof(Name));
             }
             if (Focus == null || Focus == "")
             {
                 errors.Add("Focus", new List<string>() { "empty" });
-                RaiseErrorsChanged("Focus");
+                RaiseErrorsChanged(nameof(Focus));
             }
             if (Address == null || Address == "")
             {
                 errors.Add("Address", new List<string>() { "empty" });
-                RaiseErrorsChanged("Address");
+                RaiseErrorsChanged(nameof(Address));
             }
             if (Phone == null || Phone == "")
             {
                 errors.Add("Phone", new List<string>() { "empty" });
-                RaiseErrorsChanged("Phone");
+                RaiseErrorsChanged(nameof(Phone));
             }
 
         }

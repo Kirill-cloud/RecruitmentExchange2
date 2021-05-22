@@ -1,4 +1,5 @@
-﻿using RecruitmentExchange.Model;
+﻿using RecruitmentExchange.AppData;
+using RecruitmentExchange.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,30 @@ namespace RecruitmentExchange.ViewModel
 {
     class RemoveDealVM : TabViewBase
     {
-        public override string TabName { get; set; } = "Удать сделку";
+        public override string TabName { get; set; } = "Удать сделку между ";
 
         private Deal selected;
-        private DealVM dealVM;
+        private DealVM origin;
 
         public RemoveDealVM(Deal selected, DealVM dealVM)
         {
             this.selected = selected;
-            this.dealVM = dealVM;
+            this.origin = dealVM;
+            TabName += selected.Company.Name + " " + selected.Applicant.Name;
+        }
+
+        public RelayCommand Remove
+        {
+            get
+            {
+                return new RelayCommand(obj =>
+                {
+                    DBMethods db = new();
+                    db.RemoveDeal(selected);
+                    origin.State = origin;
+                    origin.Selected = null;
+                });
+            }
         }
 
     }

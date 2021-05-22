@@ -86,7 +86,7 @@ namespace RecruitmentExchange.ViewModel
             applicant.Name = Name;
             applicant.Role = SelectedRole;
             applicant.Description = Description;
-            applicant.Salary = Convert.ToDouble(Salary);
+            applicant.Salary = Convert.ToDecimal(Salary);
         }
 
         private bool IsValid()

@@ -14,7 +14,7 @@ namespace RecruitmentExchange.ViewModel
 
         public int VacancyCount { get; set; }
         Company company;
-        CompanyVM origin;
+        readonly CompanyVM origin;
         public RemoveCompanyVM(Company company, CompanyVM origin)
         {
             TabName = "Удаление компании " + company.Name;

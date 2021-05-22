@@ -38,6 +38,9 @@ namespace RecruitmentExchange.AppData
 
             return db.Companies.Find(id);
         }
+
+
+
         public async Task EditCompany(Company edited)
         {
             using AppDBContext db = new();
@@ -46,13 +49,11 @@ namespace RecruitmentExchange.AppData
         }
         public void RemoveCompany(Company company)
         {
-            using (AppDBContext db = new())
+            using AppDBContext db = new();
+            if (company != null)
             {
-                if (company != null)
-                {
-                    db.Companies.Remove(company);
-                    db.SaveChanges();
-                }
+                db.Companies.Remove(company);
+                db.SaveChanges();
             }
         }
 
@@ -65,7 +66,6 @@ namespace RecruitmentExchange.AppData
             db.Roles.Add(role);
             db.SaveChanges();
         }
-
 
 
         public List<Role> GetAllRoles()
@@ -136,21 +136,13 @@ namespace RecruitmentExchange.AppData
             return x;
         }
 
-        //public Role GetRoleById(int id)
-        //{
-        //    using AppDBContext db = new();
-
-        //    return db.Roles.FirstOrDefault<Role>(x => x.Id == id);
-        //}
         public void RemoveVacancy(Vacancy vacancy)
         {
-            using (AppDBContext db = new())
+            using AppDBContext db = new();
+            if (vacancy != null)
             {
-                if (vacancy != null)
-                {
-                    db.Vacancies.Remove(vacancy);
-                    db.SaveChanges();
-                }
+                db.Vacancies.Remove(vacancy);
+                db.SaveChanges();
             }
         }
 
@@ -163,7 +155,7 @@ namespace RecruitmentExchange.AppData
 
             return db.Applicants.Include(x => x.Role).ToList();
         }
-        internal void AddApplicant(Applicant applicant)
+        public void AddApplicant(Applicant applicant)
         {
             using AppDBContext db = new();
 
@@ -181,7 +173,7 @@ namespace RecruitmentExchange.AppData
 
             db.SaveChanges();
         }
-        internal void EditApplicant(Applicant applicant)
+        public void EditApplicant(Applicant applicant)
         {
             using AppDBContext db = new();
             db.Applicants.Update(new Applicant()
@@ -195,6 +187,17 @@ namespace RecruitmentExchange.AppData
             });
             db.SaveChanges();
         }
+
+        public void RemoveApplicant(Applicant applicant)
+        {
+            using AppDBContext db = new();
+            if (applicant != null)
+            {
+                db.Applicants.Remove(applicant);
+                db.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region ForDeal
@@ -205,11 +208,50 @@ namespace RecruitmentExchange.AppData
             return Task.Run(() =>
             {
                 using AppDBContext db = new();
-                return db.Deals.Include(x => x.Applicant).Include(x => x.Vacancy).Include(x => x.Vacancy.Role).ToList();
+                return db.Deals
+                              .Include(x => x.Applicant)
+                              .Include(x => x.Vacancy)
+                              .Include(x => x.Vacancy.Role)
+                              .Include(x => x.Company).ToList();
             }
             );
         }
 
+        internal void EditDeal(Deal deal)
+        {
+            using AppDBContext db = new();
+            db.Deals.Update(new Deal()
+            {
+                Id = deal.Id,
+                ApplicantId = deal.Applicant.Id,
+                CompanyId = deal.Company.Id,
+                VacancyId = deal.Vacancy.Id,
+                Profit = deal.Profit
+            });
+            db.SaveChanges();
+        }
+
+        internal void AddDeal(Deal deal)
+        {
+            using AppDBContext db = new();
+            db.Deals.Add(new Deal()
+            {
+                ApplicantId = deal.Applicant.Id,
+                CompanyId = deal.Company.Id,
+                VacancyId = deal.Vacancy.Id,
+                Profit= deal.Profit
+            });
+            db.SaveChanges();
+        }
+        internal void RemoveDeal(Deal deal)
+        {
+            using AppDBContext db = new();
+            if (deal != null)
+            {
+                db.Deals.Remove(deal);
+                db.SaveChanges();
+            }
+        }
 
         #endregion
 
