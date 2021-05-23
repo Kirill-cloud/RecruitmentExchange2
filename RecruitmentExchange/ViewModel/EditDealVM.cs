@@ -15,7 +15,7 @@ namespace RecruitmentExchange.ViewModel
         private readonly Deal deal;
         private readonly DealVM origin;
 
-        public List<Company> Companies { get { DBMethods dB = new(); return dB.GetAllCompanies(); } }
+        public List<Company> Companies { get { DBMethods dB = new(); return dB.GetAllCompanies().Result; } }
         Company selectedCompany;
         public Company SelectedCompany
         {

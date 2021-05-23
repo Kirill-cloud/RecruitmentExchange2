@@ -26,7 +26,7 @@ namespace RecruitmentExchange.ViewModel
             DBMethods db = new();
 
             Roles = db.GetAllRoles();
-            Companies = db.GetAllCompanies();
+            Companies = db.GetAllCompanies().Result;
             if (vacancy==null)
             {
                 this.vacancy = new Vacancy();

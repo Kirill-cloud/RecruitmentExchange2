@@ -18,11 +18,11 @@ namespace RecruitmentExchange.AppData
             db.Companies.Add(company);
             await db.SaveChangesAsync();
         }
-        public List<Company> GetAllCompanies()
+        public async Task<List<Company>> GetAllCompanies()
         {
             using AppDBContext db = new();
 
-            return db.Companies.Include(c => c.Vacansies).ToList<Company>();
+            return await db.Companies.Include(c => c.Vacansies).ToListAsync();
         }
 
         public Company GetCompanyById(int id)

@@ -23,12 +23,29 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             { return state; }
-            set { state = value; OnPropertyChanged("State"); }
+            set
+            {
+                state = value;
+
+                LoadGridAsync();
+
+                OnPropertyChanged("State");
+            }
         }
         public CompanyVM()
         {
             State = this;
+            LoadGridAsync();
         }
+
+        private async Task LoadGridAsync()
+        {
+            DBMethods db = new();
+            companies = await db.GetAllCompanies();
+            OnPropertyChanged("Companies");
+        }
+
+
         public Company Selected { get; set; }
         //Create
         public RelayCommand GoAdd
@@ -43,13 +60,12 @@ namespace RecruitmentExchange.ViewModel
             }
         }
         //Read
+        List<Company> companies = new();
         public List<Company> Companies
         {
             get
             {
-
-                DBMethods db = new();
-                return db.GetAllCompanies();
+                return companies;
             }
         }
         //Update
