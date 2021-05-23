@@ -28,11 +28,14 @@ namespace RecruitmentExchange.ViewModel
         }
         public void RaiseErrorsChanged(string propertyName)
         {
-            if (ErrorsChanged != null)
-                ErrorsChanged(this, new DataErrorsChangedEventArgs(propertyName));
+            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        protected Dictionary<String, List<String>> errors = new Dictionary<string, List<string>>();
+        protected Dictionary<String, List<String>> errors
+        {
+            get; 
+            set;
+        } = new Dictionary<string, List<string>>();
         public IEnumerable GetErrors(string propertyName)
         {
             if (String.IsNullOrEmpty(propertyName) || !errors.ContainsKey(propertyName)) return null;

@@ -18,9 +18,9 @@ namespace RecruitmentExchange.ViewModel
         public string Description { get; set; }
         public string Salary { get; set; }
 
-
-        Applicant applicant;
-        ApplicantVM origin;
+        Decimal parsedSalary;
+        readonly Applicant applicant;
+        readonly ApplicantVM origin;
         public EditApplicantVM(Applicant applicant,ApplicantVM origin)
         {
             this.origin = origin;
@@ -28,8 +28,10 @@ namespace RecruitmentExchange.ViewModel
 
             if (applicant == null)
             {
-                this.applicant = new Applicant();
-                this.applicant.IsActive = true;
+                this.applicant = new Applicant
+                {
+                    IsActive = true
+                };
             }
             else
             {
@@ -39,7 +41,6 @@ namespace RecruitmentExchange.ViewModel
                 Salary = applicant.Salary.ToString();
             }
         }
-
         public RelayCommand AddOrEdit
         {
             get
@@ -66,32 +67,59 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
-
         private void Add()
         {
             DBMethods db = new();
             db.AddApplicant(applicant);
 
         }
-
-
         private void Edit()
         {
             DBMethods db = new();
             db.EditApplicant(applicant);
         }
-
         private void BoundApplicant()
         {
             applicant.Name = Name;
             applicant.Role = SelectedRole;
             applicant.Description = Description;
-            applicant.Salary = Convert.ToDecimal(Salary);
+            applicant.Salary = parsedSalary;
         }
-
         private bool IsValid()
         {
-            return true;
+            Validate();
+            return (errors.Count == 0);
+
+        }
+        private void Validate()
+        {
+            errors.Clear();
+
+            if (Name == null || Name == "")
+            {
+                errors.Add("Name", new List<string>() { "empty" });
+            }
+
+            if (SelectedRole == null)
+            {
+                errors.Add("SelectedRole", new List<string>() { "empty" });
+            }
+
+            if (Description == null || Description == "")
+            {
+                errors.Add("Description", new List<string>() { "empty" });
+            }
+
+            if (Salary == null || Salary =="" || !Decimal.TryParse(Salary, out parsedSalary))
+            {
+                errors.Add("Salary", new List<string>() { "empty" });
+            }
+
+            RaiseErrorsChanged(nameof(Name));
+            RaiseErrorsChanged(nameof(SelectedRole));
+            RaiseErrorsChanged(nameof(Description));
+            RaiseErrorsChanged(nameof(Salary));
+
         }
     }
 }

@@ -36,17 +36,17 @@ namespace RecruitmentExchange.ViewModel
         {
             State = this;
         }
-        public RelayCommand GoAdd => new RelayCommand(obj =>
+        public RelayCommand GoAdd => new(obj =>
         {
             State = new EditApplicantVM(null,this);
         });
 
-        public RelayCommand GoEdit => new RelayCommand(obj =>
+        public RelayCommand GoEdit => new(obj =>
         {
             State = new EditApplicantVM(Selected,this);
         });
 
-        public RelayCommand GoRemove => new RelayCommand(obj =>
+        public RelayCommand GoRemove => new(obj =>
         {
             State = new RemoveApplicantVM(Selected, this);
         });

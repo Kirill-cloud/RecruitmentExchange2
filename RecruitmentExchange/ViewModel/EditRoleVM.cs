@@ -1,6 +1,7 @@
 ﻿using RecruitmentExchange.AppData;
 using RecruitmentExchange.Model;
 using System;
+using System.Collections.Generic;
 
 namespace RecruitmentExchange.ViewModel
 {
@@ -10,15 +11,15 @@ namespace RecruitmentExchange.ViewModel
 
         public string Name { get; set; }
 
-        private Role role;
-        private RoleVM Origin;
+        private readonly Role role;
+        private readonly RoleVM Origin;
 
         public EditRoleVM(Role role, RoleVM Origin)
         {
             this.role = role;
             this.Origin = Origin;
 
-            if (role!= null)
+            if (role != null)
             {
                 Name = role.Name;
                 TabName += role.Name;
@@ -55,28 +56,36 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
-
         private void Add()
         {
             DBMethods db = new();
             db.AddRole(role);
         }
-
         private void Edit()
         {
             DBMethods db = new();
             db.EditRole(role);
         }
-
         private void BoundRole()
         {
             role.Name = Name;
         }
-
-        bool IsValid()
+        private bool IsValid()
         {
-            return true;
-        }
+            Validate();
 
+            return (errors.Count == 0);
+        }
+        void Validate()
+        {
+            errors.Clear();
+
+            if (Name == null || Name == "")
+            {
+                errors.Add("Name", new List<string>() { "empty" });
+            }
+
+            RaiseErrorsChanged(nameof(Name));
+        }
     }
 }

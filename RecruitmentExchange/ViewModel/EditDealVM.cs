@@ -12,7 +12,7 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Добавление сделки";
 
-        private Deal deal;
+        private readonly Deal deal;
         private readonly DealVM origin;
 
         public List<Company> Companies { get { DBMethods dB = new(); return dB.GetAllCompanies(); } }
@@ -87,7 +87,7 @@ namespace RecruitmentExchange.ViewModel
             else
             {
     
-                DBMethods db = new();
+                //DBMethods db = new();
 
                 TabName = "Редактирование сделки между " + deal.Company.Name + " и " + deal.Applicant.Name;
             }
@@ -143,8 +143,34 @@ namespace RecruitmentExchange.ViewModel
 
         private bool IsValid()
         {
-            return true;
+            Validate();
+            return (errors.Count == 0);
+
         }
 
+        private void Validate()
+        {
+            errors.Clear();
+
+            if (SelectedCompany == null)
+            {
+                errors.Add("SelectedCompany", new List<string>() { "empty" });
+            }
+
+            if (SelectedVacancy == null)
+            {
+                errors.Add("SelectedVacancy", new List<string>() { "empty" });
+            }
+
+            if (SelectedApplicant == null)
+            {
+                errors.Add("SelectedApplicant", new List<string>() { "empty" });
+            }
+
+            RaiseErrorsChanged(nameof(SelectedCompany));
+            RaiseErrorsChanged(nameof(SelectedVacancy));
+            RaiseErrorsChanged(nameof(SelectedApplicant));
+
+        }
     }
 }

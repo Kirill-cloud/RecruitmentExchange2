@@ -11,14 +11,12 @@ namespace RecruitmentExchange.ViewModel
 
         public List<Role> Roles { get; set; }
         public List<Company> Companies{ get; set; }
-
         public Role SelectedRole { get; set; }
         public Company SelectedCompany { get; set; }
         public string Description { get; set; }
 
-
-        Vacancy vacancy;
-        VacancyVM origin;
+        readonly Vacancy vacancy;
+        readonly VacancyVM origin;
 
         public EditVacancyVM(Vacancy vacancy,VacancyVM origin)
         {
@@ -40,7 +38,6 @@ namespace RecruitmentExchange.ViewModel
                 Description = vacancy.Description;
             }
         }
-
         public RelayCommand AddOrEdit
         {
             get
@@ -67,29 +64,49 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
-
         private void Add()
         {
             DBMethods db = new();
             db.AddVacany(vacancy);
         }
-
         private void Edit()
         {
             DBMethods db = new();
             db.EditVacancy(vacancy);
         }
-
         private void BoundVacancy()
         {
             vacancy.Company = SelectedCompany;
             vacancy.Role = SelectedRole;
             vacancy.Description = Description;
         }
-
         private bool IsValid()
         {
-            return true;
+            Validate();
+
+            return (errors.Count == 0);
+        }
+        void Validate()
+        {
+            errors.Clear();
+
+
+            if (SelectedRole == null)
+            {
+                errors.Add("SelectedRole", new List<string>() { "empty" });
+            }
+            if (SelectedCompany == null)
+            {
+                errors.Add("SelectedCompany", new List<string>() { "empty" });
+            }
+            if (Description == null || Description == "")
+            {
+                errors.Add("Description", new List<string>() { "empty" });
+            }
+
+            RaiseErrorsChanged(nameof(SelectedRole));
+            RaiseErrorsChanged(nameof(SelectedCompany));
+            RaiseErrorsChanged(nameof(Description));
         }
     }
 }

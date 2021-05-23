@@ -12,16 +12,11 @@ namespace RecruitmentExchange.AppData
     {
 
         #region ForCompany
-        public string AddCompany(Company company)
+        public async Task AddCompany(Company company)
         {
-
-            using (AppDBContext db = new())
-            {
-                db.Companies.Add(company);
-                db.SaveChanges();
-            }
-
-            return "Done";
+            using AppDBContext db = new();
+            db.Companies.Add(company);
+            await db.SaveChangesAsync();
         }
         public List<Company> GetAllCompanies()
         {
@@ -30,16 +25,12 @@ namespace RecruitmentExchange.AppData
             return db.Companies.Include(c => c.Vacansies).ToList<Company>();
         }
 
-
-
         public Company GetCompanyById(int id)
         {
             using AppDBContext db = new();
 
             return db.Companies.Find(id);
         }
-
-
 
         public async Task EditCompany(Company edited)
         {
