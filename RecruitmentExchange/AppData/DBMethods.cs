@@ -2,6 +2,7 @@
 using RecruitmentExchange.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,14 @@ namespace RecruitmentExchange.AppData
             using AppDBContext db = new();
 
             return await db.Companies.Include(c => c.Vacansies).ToListAsync();
+        }
+
+        public async Task<ObservableCollection<Company>> GetAllCompanies(int  a)
+        {
+            using AppDBContext db = new();
+
+            return new();
+            //await db.Companies.Include(c => c.Vacansies);
         }
 
         public async Task EditCompany(Company edited)

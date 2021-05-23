@@ -8,12 +8,13 @@ namespace MVVM
 {
     class MainVM
     {
-        readonly IEnumerable<VMBase> viewModels;
+        readonly List<VMBase> viewModels = new();
         public IEnumerable<VMBase> ViewModels { get { return viewModels; } }
         public MainVM()
         {
-            viewModels.Append(new FirstTabVM());
-            viewModels.Append(new SecondTabVM());
+            viewModels.Add(new FirstTabVM());
+            viewModels.Add(new SecondTabVM());
         }
+
     }
 }

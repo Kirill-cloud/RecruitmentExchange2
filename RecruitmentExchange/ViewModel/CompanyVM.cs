@@ -5,6 +5,7 @@ using RecruitmentExchange.View.Company;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -28,11 +29,12 @@ namespace RecruitmentExchange.ViewModel
             set
             {
                 state = value;
-                OnPropertyChanged("State");
+                OnPropertyChanged();
             }
         }
         public CompanyVM()
         {
+            LoadGridAsync();
             LoadGridAsync();
         }
 
@@ -41,7 +43,7 @@ namespace RecruitmentExchange.ViewModel
             State = new LoadingVM();
 
             DBMethods db = new();
-            companies = await db.GetAllCompanies();
+            Companies = new ObservableCollection<Company>(await db.GetAllCompanies());
 
             State = this;
         }
@@ -61,12 +63,17 @@ namespace RecruitmentExchange.ViewModel
             }
         }
         //Read
-        List<Company> companies = new();
-        public List<Company> Companies
+        ObservableCollection<Company> companies = new();
+        public ObservableCollection<Company> Companies
         {
             get
             {
                 return companies;
+            }
+            set
+            {
+                companies = value;
+                OnPropertyChanged();
             }
         }
         //Update
@@ -104,6 +111,8 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
+                    var x = State;
+                    State = null;
                     State = this;
                     Selected = null;
                 });
