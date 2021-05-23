@@ -23,34 +23,37 @@ namespace RecruitmentExchange.ViewModel
             set { state = value; OnPropertyChanged("State"); }
         }
 
+        List<Applicant> applicants;
         public List<Applicant> Applicants
         {
             get
             {
-                DBMethods db = new();
-                return db.GetAllApplicants();
+                return applicants;
+            }
+            set
+            {
+                applicants = value;
+                OnPropertyChanged(nameof(Applicants));
             }
         }
 
         public ApplicantVM()
         {
             State = this;
+
         }
         public RelayCommand GoAdd => new(obj =>
         {
             State = new EditApplicantVM(null,this);
         });
-
         public RelayCommand GoEdit => new(obj =>
         {
             State = new EditApplicantVM(Selected,this);
         });
-
         public RelayCommand GoRemove => new(obj =>
         {
             State = new RemoveApplicantVM(Selected, this);
         });
-
         public RelayCommand Cancel
         {
             get

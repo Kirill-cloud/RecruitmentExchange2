@@ -21,11 +21,18 @@ namespace RecruitmentExchange.ViewModel
             this.company = company;
             this.origin = origin;
 
+            LoadRelatedDataAsync();
 
 
-            DBMethods db = new();
-            VacancyCount = db.GetAllVacancies().Where(x => x.Company.Id == company.Id).Count();
         }
+
+        async void LoadRelatedDataAsync()
+        {
+            DBMethods db = new();
+            VacancyCount = (await db.GetAllVacancies()).Where(x => x.Company.Id == company.Id).Count();
+            OnPropertyChanged("VacancyCount");
+        }
+
         public RelayCommand Remove
         {
             get
@@ -34,8 +41,8 @@ namespace RecruitmentExchange.ViewModel
                     {
                         DBMethods db = new();
                         db.RemoveCompany(company);
-                        origin.State = origin;
                         origin.Selected = null;
+                        origin.LoadGridAsync();
                     });
             }
         }

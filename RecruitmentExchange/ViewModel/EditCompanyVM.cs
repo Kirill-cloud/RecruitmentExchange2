@@ -56,9 +56,8 @@ namespace RecruitmentExchange.ViewModel
                             Add();
                         }
 
-                        (Origin as CompanyVM).State = Origin;
                         (Origin as CompanyVM).Selected = null;
-
+                        (Origin as CompanyVM).LoadGridAsync();
                     }
                 });
             }

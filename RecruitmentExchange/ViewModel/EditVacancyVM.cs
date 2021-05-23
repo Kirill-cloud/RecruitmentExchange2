@@ -2,6 +2,7 @@
 using RecruitmentExchange.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
@@ -15,7 +16,7 @@ namespace RecruitmentExchange.ViewModel
         public Company SelectedCompany { get; set; }
         public string Description { get; set; }
 
-        readonly Vacancy vacancy;
+        Vacancy vacancy;
         readonly VacancyVM origin;
 
         public EditVacancyVM(Vacancy vacancy,VacancyVM origin)
@@ -23,13 +24,22 @@ namespace RecruitmentExchange.ViewModel
             this.vacancy = vacancy;
             this.origin = origin;
 
+
+            LoadRelatedDataAsync();
+
+
+        }
+
+        async Task LoadRelatedDataAsync()
+        {
             DBMethods db = new();
 
-            Roles = db.GetAllRoles();
-            Companies = db.GetAllCompanies().Result;
-            if (vacancy==null)
+            Roles = await db.GetAllRoles();
+            Companies = await db.GetAllCompanies();
+
+            if (vacancy == null)
             {
-                this.vacancy = new Vacancy();
+                vacancy = new Vacancy();
             }
             else
             {
@@ -37,7 +47,10 @@ namespace RecruitmentExchange.ViewModel
                 SelectedCompany = Companies.Find(c => c.Id == vacancy.Company.Id);
                 Description = vacancy.Description;
             }
+            OnPropertyChanged(nameof(Companies));
+            OnPropertyChanged(nameof(Roles));
         }
+
         public RelayCommand AddOrEdit
         {
             get
@@ -57,7 +70,7 @@ namespace RecruitmentExchange.ViewModel
                             Add();
                         }
 
-                        origin.State = origin;
+                        origin.LoadGridAsync();
                         origin.Selected = null;
 
                     }

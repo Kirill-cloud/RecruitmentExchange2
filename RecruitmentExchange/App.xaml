@@ -77,6 +77,10 @@
                 <viewC:RemoveCompany/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewModel:LoadingVM}">
+                <view:LoadingPage />
+            </DataTemplate>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

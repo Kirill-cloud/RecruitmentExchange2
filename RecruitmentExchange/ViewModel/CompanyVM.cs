@@ -22,27 +22,28 @@ namespace RecruitmentExchange.ViewModel
         public TabViewBase State
         {
             get
-            { return state; }
+            {
+                return state;
+            }
             set
             {
                 state = value;
-
-                LoadGridAsync();
-
                 OnPropertyChanged("State");
             }
         }
         public CompanyVM()
         {
-            State = this;
             LoadGridAsync();
         }
 
-        private async Task LoadGridAsync()
+        public async Task LoadGridAsync()
         {
+            State = new LoadingVM();
+
             DBMethods db = new();
             companies = await db.GetAllCompanies();
-            OnPropertyChanged("Companies");
+
+            State = this;
         }
 
 

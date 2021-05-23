@@ -23,10 +23,18 @@ namespace RecruitmentExchange.ViewModel
             origin = Origin;
             this.role = role;
             TabName += role.Name;
-            DBMethods db = new DBMethods();
-            ApplicantCount = db.GetAllApplicants().Where(x => x.Role.Id == role.Id).Count();
-            VacancyCount = db.GetAllVacancies().Where(x => x.Role.Id == role.Id).Count();
+            LoadRelatedDataAsync();
         }
+
+        private async Task LoadRelatedDataAsync()
+        {
+            DBMethods db = new DBMethods();
+            ApplicantCount = (await db.GetAllApplicants()).Where(x => x.Role.Id == role.Id).Count();
+            VacancyCount = (await db.GetAllVacancies()).Where(x => x.Role.Id == role.Id).Count();
+            OnPropertyChanged(nameof(ApplicantCount));
+            OnPropertyChanged(nameof(VacancyCount));
+        }
+
         public RelayCommand Remove
         {
             get
@@ -35,7 +43,8 @@ namespace RecruitmentExchange.ViewModel
                 {
                     DBMethods db = new();
                     db.RemoveRole(role);
-                    origin.State = origin;
+
+                    origin.LoadGridAsync();
                     origin.Selected = null;
                 });
             }

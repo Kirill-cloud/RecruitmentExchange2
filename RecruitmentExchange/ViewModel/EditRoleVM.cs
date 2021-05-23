@@ -49,7 +49,7 @@ namespace RecruitmentExchange.ViewModel
                             Add();
                         }
 
-                        Origin.State = Origin;
+                        Origin.LoadGridAsync();
                         Origin.Selected = null;
 
                     }

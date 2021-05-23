@@ -16,20 +16,53 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Роли";
 
-
-        public List<Role> Roles { get { DBMethods db = new() ; return db.GetAllRoles(); } }
-
-        TabViewBase state;
-        public TabViewBase State { get { return state; } set { state = value; OnPropertyChanged("State"); } }
+        List<Role> roles;
 
         public RoleVM()
         {
             State = this;
+
+            LoadGridAsync();
         }
 
-        public Role Selected { get; set; }
+        public async Task LoadGridAsync()
+        {
+            State = new LoadingVM();
 
-        public RelayCommand GoAdd 
+            DBMethods db = new();
+            Roles = await db.GetAllRoles();
+
+            State = this;
+        }
+
+        public List<Role> Roles
+        {
+            get
+            {
+                return roles;
+            }
+            set
+            {
+                roles = value;
+                OnPropertyChanged(nameof(Roles));
+            }
+        }
+
+        TabViewBase state;
+        public TabViewBase State
+        {
+            get
+            {
+                return state;
+            }
+            set
+            {
+                state = value;
+                OnPropertyChanged("State");
+            }
+        }
+        public Role Selected { get; set; }
+        public RelayCommand GoAdd
         {
             get
             {
@@ -47,23 +80,21 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    if (Selected!=null)
+                    if (Selected != null)
                     {
                         State = new EditRoleVM(Selected, this);
-
                     }
-
                 });
             }
         }
-
         public RelayCommand GoRemove => new RelayCommand(obj =>
         {
             if (Selected != null)
             {
-                State = new RemoveRoleVM(Selected,this);
+                State = new RemoveRoleVM(Selected, this);
             }
         });
+
 
         public RelayCommand Cancel
         {
@@ -74,7 +105,6 @@ namespace RecruitmentExchange.ViewModel
                     State = this;
                     Selected = null;
                 });
-
             }
         }
 

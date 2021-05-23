@@ -15,13 +15,47 @@ namespace RecruitmentExchange.ViewModel
     public class VacancyVM : TabViewBase
     {
         public override string TabName { get; set; } = "Вакансии";
-        public List<Vacancy> Vacancies { get { DBMethods db = new(); return db.GetAllVacancies(); } }
+
+        List<Vacancy> vacancies;
+        public List<Vacancy> Vacancies
+        {
+            get
+            {
+                return vacancies;
+            }
+            set
+            {
+                vacancies = value;
+                OnPropertyChanged("Vacancies");
+            }
+        }
 
         TabViewBase state;
-        public TabViewBase State { get { return state; } set { state = value; OnPropertyChanged("State"); } }
+        public TabViewBase State
+        {
+            get
+            {
+                return state;
+            }
+            set
+            {
+                state = value;
+                OnPropertyChanged("State");
+            }
+        }
 
         public VacancyVM()
         {
+            LoadGridAsync();
+        }
+        public async Task LoadGridAsync()
+        {
+            State = new LoadingVM();
+
+
+            DBMethods db = new();
+            Vacancies = await db.GetAllVacancies();
+
             State = this;
         }
 

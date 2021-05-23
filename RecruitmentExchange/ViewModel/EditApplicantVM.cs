@@ -13,22 +13,43 @@ namespace RecruitmentExchange.ViewModel
         public override string TabName { get; set; }
 
         public string Name { get; set; }
-        public List<Role> Roles { get { DBMethods db = new(); return db.GetAllRoles(); } }
+        List<Role> roles;
+        public List<Role> Roles
+        {
+            get
+            {
+                return roles;
+            }
+            set
+            {
+                roles = value;
+                OnPropertyChanged(nameof(Roles));
+            }
+        }
         public Role SelectedRole { get; set; }
         public string Description { get; set; }
         public string Salary { get; set; }
 
         Decimal parsedSalary;
-        readonly Applicant applicant;
+        Applicant applicant;
         readonly ApplicantVM origin;
-        public EditApplicantVM(Applicant applicant,ApplicantVM origin)
+        public EditApplicantVM(Applicant applicant, ApplicantVM origin)
         {
             this.origin = origin;
             this.applicant = applicant;
 
+            LoadRelatedDataAsync();
+        }
+
+        async Task LoadRelatedDataAsync()
+        {
+            DBMethods db = new();
+
+            Roles = await db.GetAllRoles();
+
             if (applicant == null)
             {
-                this.applicant = new Applicant
+                applicant = new Applicant
                 {
                     IsActive = true
                 };
@@ -39,8 +60,12 @@ namespace RecruitmentExchange.ViewModel
                 SelectedRole = Roles.Find(c => c.Id == applicant.Role.Id);
                 Description = applicant.Description;
                 Salary = applicant.Salary.ToString();
+
             }
+
+            OnPropertyChanged(nameof(Roles));
         }
+
         public RelayCommand AddOrEdit
         {
             get
@@ -110,7 +135,7 @@ namespace RecruitmentExchange.ViewModel
                 errors.Add("Description", new List<string>() { "empty" });
             }
 
-            if (Salary == null || Salary =="" || !Decimal.TryParse(Salary, out parsedSalary))
+            if (Salary == null || Salary == "" || !Decimal.TryParse(Salary, out parsedSalary))
             {
                 errors.Add("Salary", new List<string>() { "empty" });
             }

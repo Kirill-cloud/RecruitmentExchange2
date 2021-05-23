@@ -25,13 +25,6 @@ namespace RecruitmentExchange.AppData
             return await db.Companies.Include(c => c.Vacansies).ToListAsync();
         }
 
-        public Company GetCompanyById(int id)
-        {
-            using AppDBContext db = new();
-
-            return db.Companies.Find(id);
-        }
-
         public async Task EditCompany(Company edited)
         {
             using AppDBContext db = new();
@@ -59,10 +52,10 @@ namespace RecruitmentExchange.AppData
         }
 
 
-        public List<Role> GetAllRoles()
+        public async Task<List<Role>> GetAllRoles()
         {
             using AppDBContext db = new();
-            return db.Roles.ToList<Role>();
+            return await db.Roles.ToListAsync();
         }
         public async Task<string> RemoveRole(Role role)
         {
@@ -120,10 +113,11 @@ namespace RecruitmentExchange.AppData
             db.SaveChanges();
         }
 
-        public List<Vacancy> GetAllVacancies()
+        public async Task<List<Vacancy>> GetAllVacancies()
         {
             using AppDBContext db = new();
-            var x = db.Vacancies.Include(x => x.Role).Include(x => x.Company).ToList();
+            List<Vacancy> x = await db.Vacancies.Include(x => x.Role).Include(x => x.Company).ToListAsync();
+            
             return x;
         }
 
@@ -140,11 +134,11 @@ namespace RecruitmentExchange.AppData
         #endregion
 
         #region ForApplicant
-        public List<Applicant> GetAllApplicants()
+        public async Task<List<Applicant>> GetAllApplicants()
         {
             using AppDBContext db = new();
 
-            return db.Applicants.Include(x => x.Role).ToList();
+            return await db.Applicants.Include(x => x.Role).ToListAsync();
         }
         public void AddApplicant(Applicant applicant)
         {

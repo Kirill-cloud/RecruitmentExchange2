@@ -12,10 +12,22 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Добавление сделки";
 
-        private readonly Deal deal;
+        private Deal deal;
         private readonly DealVM origin;
 
-        public List<Company> Companies { get { DBMethods dB = new(); return dB.GetAllCompanies().Result; } }
+        List<Company> companies;
+        public List<Company> Companies
+        {
+            get
+            {
+                return companies;
+            }
+            set
+            {
+                companies = value;
+                OnPropertyChanged(nameof(Companies));
+            }
+        }
         Company selectedCompany;
         public Company SelectedCompany
         {
@@ -29,20 +41,26 @@ namespace RecruitmentExchange.ViewModel
                 OnPropertyChanged("Vacancies");
             }
         }
+
+
+        List<Vacancy> vacancies;
         public List<Vacancy> Vacancies
         {
             get
             {
                 if (SelectedCompany != null)
                 {
-                    DBMethods dB = new();
-
-                    return dB.GetAllVacancies().Where(x => x.CompanyId == SelectedCompany.Id).ToList();
+                    return vacancies.Where(vac => vac.CompanyId == SelectedCompany.Id).ToList();
                 }
                 else
                 {
                     return new();
                 }
+            }
+            set
+            {
+                vacancies = value;
+                OnPropertyChanged(nameof(Vacancies));
             }
         }
         Vacancy selectedVacancy;
@@ -58,19 +76,26 @@ namespace RecruitmentExchange.ViewModel
                 OnPropertyChanged("Applicants");
             }
         }
+
+
+        List<Applicant> applicants;
         public List<Applicant> Applicants
         {
             get
             {
                 if (SelectedVacancy != null)
                 {
-                    DBMethods dB = new();
-                    return dB.GetAllApplicants().Where(x => x.RoleId == SelectedVacancy.RoleId).ToList();
+                    return applicants.Where(apl => apl.RoleId == SelectedVacancy.RoleId ).ToList();
                 }
                 else
                 {
                     return new();
                 }
+            }
+            set
+            {
+                applicants = value;
+                OnPropertyChanged(nameof(Applicants));
             }
         }
         public Applicant SelectedApplicant { get; set; }
@@ -80,17 +105,28 @@ namespace RecruitmentExchange.ViewModel
         {
             this.deal = deal;
             this.origin = origin;
+
+            LoadRelatedDataAsync();
+        }
+        
+        async Task LoadRelatedDataAsync()
+        {
+            DBMethods db = new();
+
+            Companies = await db.GetAllCompanies();
+            Vacancies = await db.GetAllVacancies();
+            Applicants = await db.GetAllApplicants();
+
             if (deal == null)
             {
-                this.deal = new Deal();
+                deal = new Deal();
             }
             else
             {
-    
-                //DBMethods db = new();
-
                 TabName = "Редактирование сделки между " + deal.Company.Name + " и " + deal.Applicant.Name;
+                OnPropertyChanged("TabName");
             }
+
         }
 
         public RelayCommand AddOrEdit
