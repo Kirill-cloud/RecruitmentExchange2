@@ -26,38 +26,30 @@ namespace RecruitmentExchange.AppData
             return await db.Companies.Include(c => c.Vacansies).ToListAsync();
         }
 
-        public async Task<ObservableCollection<Company>> GetAllCompanies(int  a)
-        {
-            using AppDBContext db = new();
-
-            return new();
-            //await db.Companies.Include(c => c.Vacansies);
-        }
-
         public async Task EditCompany(Company edited)
         {
             using AppDBContext db = new();
             db.Companies.Update(edited);
             await db.SaveChangesAsync();
         }
-        public void RemoveCompany(Company company)
+        public async Task RemoveCompany(Company company)
         {
             using AppDBContext db = new();
             if (company != null)
             {
                 db.Companies.Remove(company);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
         #endregion
 
         #region ForRole
-        public void AddRole(Role role)
+        public async Task AddRole(Role role)
         {
             using AppDBContext db = new();
             db.Roles.Add(role);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
 
@@ -95,7 +87,7 @@ namespace RecruitmentExchange.AppData
         #endregion
 
         #region ForVacancy
-        public void AddVacany(Vacancy vacancy)
+        public async Task AddVacany(Vacancy vacancy)
         {
             using AppDBContext db = new();
 
@@ -107,9 +99,9 @@ namespace RecruitmentExchange.AppData
 
 
             db.Vacancies.Add(vacancy);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
-        public void EditVacancy(Vacancy vacancy)
+        public async Task EditVacancy(Vacancy vacancy)
         {
             using AppDBContext db = new();
             db.Vacancies.Update(new Vacancy()
@@ -119,24 +111,24 @@ namespace RecruitmentExchange.AppData
                 RoleId = vacancy.Role.Id,
                 Description = vacancy.Description
             });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         public async Task<List<Vacancy>> GetAllVacancies()
         {
             using AppDBContext db = new();
             List<Vacancy> x = await db.Vacancies.Include(x => x.Role).Include(x => x.Company).ToListAsync();
-            
+
             return x;
         }
 
-        public void RemoveVacancy(Vacancy vacancy)
+        public async Task RemoveVacancy(Vacancy vacancy)
         {
             using AppDBContext db = new();
             if (vacancy != null)
             {
                 db.Vacancies.Remove(vacancy);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
@@ -149,7 +141,7 @@ namespace RecruitmentExchange.AppData
 
             return await db.Applicants.Include(x => x.Role).ToListAsync();
         }
-        public void AddApplicant(Applicant applicant)
+        public async Task AddApplicant(Applicant applicant)
         {
             using AppDBContext db = new();
 
@@ -165,9 +157,9 @@ namespace RecruitmentExchange.AppData
                 IsActive = applicant.IsActive
             });
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
-        public void EditApplicant(Applicant applicant)
+        public async Task EditApplicant(Applicant applicant)
         {
             using AppDBContext db = new();
             db.Applicants.Update(new Applicant()
@@ -179,39 +171,33 @@ namespace RecruitmentExchange.AppData
                 Salary = applicant.Salary,
                 IsActive = applicant.IsActive
             });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public void RemoveApplicant(Applicant applicant)
+        public async Task RemoveApplicant(Applicant applicant)
         {
             using AppDBContext db = new();
             if (applicant != null)
             {
                 db.Applicants.Remove(applicant);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
         #endregion
 
         #region ForDeal
-        public Task<List<Deal>> GetAllDeals()
+        public async Task<List<Deal>> GetAllDeals()
         {
-
-
-            return Task.Run(() =>
-            {
-                using AppDBContext db = new();
-                return db.Deals
-                              .Include(x => x.Applicant)
-                              .Include(x => x.Vacancy)
-                              .Include(x => x.Vacancy.Role)
-                              .Include(x => x.Company).ToList();
-            }
-            );
+            using AppDBContext db = new();
+            return await db.Deals
+                                .Include(x => x.Applicant)
+                                .Include(x => x.Vacancy)
+                                .Include(x => x.Vacancy.Role)
+                                .Include(x => x.Company).ToListAsync();
         }
 
-        internal void EditDeal(Deal deal)
+        public async Task EditDeal(Deal deal)
         {
             using AppDBContext db = new();
             db.Deals.Update(new Deal()
@@ -222,10 +208,10 @@ namespace RecruitmentExchange.AppData
                 VacancyId = deal.Vacancy.Id,
                 Profit = deal.Profit
             });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        internal void AddDeal(Deal deal)
+        public async Task AddDeal(Deal deal)
         {
             using AppDBContext db = new();
             db.Deals.Add(new Deal()
@@ -233,17 +219,17 @@ namespace RecruitmentExchange.AppData
                 ApplicantId = deal.Applicant.Id,
                 CompanyId = deal.Company.Id,
                 VacancyId = deal.Vacancy.Id,
-                Profit= deal.Profit
+                Profit = deal.Profit
             });
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
-        internal void RemoveDeal(Deal deal)
+        public async Task RemoveDeal(Deal deal)
         {
             using AppDBContext db = new();
             if (deal != null)
             {
                 db.Deals.Remove(deal);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 

@@ -10,7 +10,7 @@ namespace RecruitmentExchange.ViewModel
 {
     class EditCompanyVM : TabViewBase
     {
-        public override string TabName { get; set; } = "Редактирование Компании";
+        public override string TabName { get; set; } = "Редактирование Компании ";
 
         public string Name { get; set; }
         public string Focus { get; set; }
@@ -18,15 +18,15 @@ namespace RecruitmentExchange.ViewModel
         public string Phone { get; set; }
 
         public Company Company { get; set; }
-        public TabViewBase Origin { get; set; }
-        public EditCompanyVM(Company company, TabViewBase viewBase)
+        public CompanyVM Origin { get; set; }
+        public EditCompanyVM(Company company, CompanyVM viewBase)
         {
             Origin = viewBase;
             Company = company;
             if (Company == null)
             {
                 Company = new Company();
-                TabName = "Добавление компании " + Company.Name;
+                TabName = "Добавление компании";
             }
             else
             {
@@ -34,14 +34,17 @@ namespace RecruitmentExchange.ViewModel
                 Focus = Company.FocusedOn;
                 Address = Company.Address;
                 Phone = Company.Phone;
+
+                TabName += Company.Name;
             }
         }
+
 
         public RelayCommand AddOrEdit
         {
             get
             {
-                return new RelayCommand((obj) =>
+                return new RelayCommand(async (obj) =>
                 {
                     if (IsValid())
                     {
@@ -49,30 +52,31 @@ namespace RecruitmentExchange.ViewModel
 
                         if (Company.Id != 0)
                         {
-                            Edit();
+                            await Edit();
                         }
                         else
                         {
-                            Add();
+                            await Add();
                         }
 
-                        (Origin as CompanyVM).Selected = null;
-                        (Origin as CompanyVM).LoadGridAsync();
+                        Origin.State = new IdleCompanyVM();
+
                     }
                 });
             }
         }
+        async Task Edit()
+        {
+            DBMethods db = new();
+            await db.EditCompany(Company);
+        }
+        async Task Add()
+        {
+            DBMethods db = new();
+            await db.AddCompany(Company);
+        }
 
-        void Edit()
-        {
-            DBMethods db = new();
-            db.EditCompany(Company);
-        }
-        void Add()
-        {
-            DBMethods db = new();
-            db.AddCompany(Company);
-        }
+
         void BoundCompany()
         {
             Company.Name = Name;
@@ -83,13 +87,11 @@ namespace RecruitmentExchange.ViewModel
         private bool IsValid()
         {
             Validate();
-
             return (errors.Count == 0);
         }
         void Validate()
         {
             errors.Clear();
-
 
             if (Name == null || Name == "")
             {
@@ -112,7 +114,6 @@ namespace RecruitmentExchange.ViewModel
             RaiseErrorsChanged(nameof(Focus));
             RaiseErrorsChanged(nameof(Address));
             RaiseErrorsChanged(nameof(Phone));
-
         }
     }
 }

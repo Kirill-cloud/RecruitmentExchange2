@@ -8,7 +8,13 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl ItemsSource="{Binding ViewModels}" >
-            
+            <TabControl.ItemTemplate>
+                <DataTemplate >
+                    <Button Command="{Binding SomeDo}">
+                        <TextBlock  >АНИМЕ</TextBlock>
+                    </Button>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
         </TabControl>
     </Grid>
 </Window>

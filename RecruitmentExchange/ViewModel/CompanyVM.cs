@@ -34,22 +34,9 @@ namespace RecruitmentExchange.ViewModel
         }
         public CompanyVM()
         {
-            LoadGridAsync();
-            LoadGridAsync();
+            State = new IdleCompanyVM();
         }
 
-        public async Task LoadGridAsync()
-        {
-            State = new LoadingVM();
-
-            DBMethods db = new();
-            Companies = new ObservableCollection<Company>(await db.GetAllCompanies());
-
-            State = this;
-        }
-
-
-        public Company Selected { get; set; }
         //Create
         public RelayCommand GoAdd
         {
@@ -57,35 +44,20 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-
                     State = new EditCompanyVM(null, this);
                 });
             }
         }
-        //Read
-        ObservableCollection<Company> companies = new();
-        public ObservableCollection<Company> Companies
-        {
-            get
-            {
-                return companies;
-            }
-            set
-            {
-                companies = value;
-                OnPropertyChanged();
-            }
-        }
-        //Update
+         //Update
         public RelayCommand GoEdit
         {
             get
             {
                 return new RelayCommand(obj =>
                 {
-                    if (Selected != null)
+                    if ((State is IdleCompanyVM) && (State as IdleCompanyVM).Selected != null)
                     {
-                        State = new EditCompanyVM(Selected, this);
+                        State = new EditCompanyVM((State as IdleCompanyVM).Selected, this);
                     }
                 });
             }
@@ -97,9 +69,9 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    if (Selected != null)
+                    if ((State is IdleCompanyVM) && (State as IdleCompanyVM).Selected != null)
                     {
-                        State = new RemoveCompanyVM(Selected, this);
+                        State = new RemoveCompanyVM((State as IdleCompanyVM).Selected, this);
                     }
                 });
             }
@@ -111,10 +83,7 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    var x = State;
-                    State = null;
-                    State = this;
-                    Selected = null;
+                    State = new IdleCompanyVM();
                 });
 
             }

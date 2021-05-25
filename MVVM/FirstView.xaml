@@ -10,7 +10,10 @@
         <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center">
             <Label Content="{Binding LoadingState}" FontSize="26" />
             <DataGrid ItemsSource="{Binding Users}" />
-            <Button Command="{Binding SomeDo}">First</Button>
+            <WrapPanel >
+                <Button Command="{Binding SomeDo}">First</Button>
+                <Button Command="{Binding SomeAdd}">ADD</Button>
+            </WrapPanel>
         </StackPanel>
 
     </Grid>

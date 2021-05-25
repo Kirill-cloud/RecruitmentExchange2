@@ -16,20 +16,6 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Вакансии";
 
-        List<Vacancy> vacancies;
-        public List<Vacancy> Vacancies
-        {
-            get
-            {
-                return vacancies;
-            }
-            set
-            {
-                vacancies = value;
-                OnPropertyChanged("Vacancies");
-            }
-        }
-
         TabViewBase state;
         public TabViewBase State
         {
@@ -46,20 +32,10 @@ namespace RecruitmentExchange.ViewModel
 
         public VacancyVM()
         {
-            LoadGridAsync();
-        }
-        public async Task LoadGridAsync()
-        {
-            State = new LoadingVM();
-
-
-            DBMethods db = new();
-            Vacancies = await db.GetAllVacancies();
-
-            State = this;
+            State = new IdleVacancyVM();
         }
 
-        public Vacancy Selected { get; set; }
+
 
 
         public RelayCommand GoAdd
@@ -68,7 +44,10 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    State = new EditVacancyVM(null, this);
+                    if (State is IdleVacancyVM)
+                    {
+                        State = new EditVacancyVM(null, this);
+                    }
                 });
             }
         }
@@ -78,7 +57,14 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    State = new EditVacancyVM(Selected, this);
+                    if (State is IdleVacancyVM)
+                    {
+                        IdleVacancyVM vM = (IdleVacancyVM)State;
+                        if (vM.Selected != null)
+                        {
+                            State = new EditVacancyVM(vM.Selected, this);
+                        }
+                    }
                 });
             }
         }
@@ -88,9 +74,13 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    if (Selected != null)
+                    if (State is IdleVacancyVM)
                     {
-                        State = new RemoveVacancyVM(Selected, this);
+                        IdleVacancyVM vM = (IdleVacancyVM)State;
+                        if (vM.Selected != null)
+                        {
+                            State = new RemoveVacancyVM(vM.Selected, this);
+                        }
                     }
                 });
             }
@@ -101,8 +91,7 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    State = this;
-                    Selected = null;
+                    State = new IdleVacancyVM();
                 });
 
             }

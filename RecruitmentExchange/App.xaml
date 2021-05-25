@@ -17,7 +17,7 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <DataTemplate DataType="{x:Type viewModel:RoleVM}" >
+            <DataTemplate DataType="{x:Type viewModel:IdleRoleVM}" >
                 <viewR:IdleRole/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:EditRoleVM}" >
@@ -29,7 +29,7 @@
 
             
 
-            <DataTemplate DataType="{x:Type viewModel:ApplicantVM}" >
+            <DataTemplate DataType="{x:Type viewModel:IdleApplicantVM}" >
                 <viewA:IdleApplicant/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:EditApplicantVM}" >
@@ -41,7 +41,7 @@
 
 
 
-            <DataTemplate DataType="{x:Type viewModel:DealVM}" >
+            <DataTemplate DataType="{x:Type viewModel:IdleDealVM}" >
                 <viewD:IdleDeal/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:EditDealVM}" >
@@ -53,7 +53,7 @@
 
 
 
-            <DataTemplate DataType="{x:Type viewModel:VacancyVM}" >
+            <DataTemplate DataType="{x:Type viewModel:IdleVacancyVM}" >
                 <viewV:IdleVacancyView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:EditVacancyVM}" >
@@ -65,7 +65,7 @@
             
             
 
-            <DataTemplate DataType="{x:Type viewModel:CompanyVM}" >
+            <DataTemplate DataType="{x:Type viewModel:IdleCompanyVM}" >
                 <view:IdleCompanyView/>
             </DataTemplate>
             

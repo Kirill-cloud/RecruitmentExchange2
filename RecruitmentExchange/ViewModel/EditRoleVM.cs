@@ -2,6 +2,7 @@
 using RecruitmentExchange.Model;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
@@ -34,7 +35,7 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand((obj) =>
+                return new RelayCommand(async (obj) =>
                 {
                     if (IsValid())
                     {
@@ -42,29 +43,28 @@ namespace RecruitmentExchange.ViewModel
 
                         if (role.Id != 0)
                         {
-                            Edit();
+                            await Edit();
                         }
                         else
                         {
-                            Add();
+                            await Add();
                         }
 
-                        Origin.LoadGridAsync();
-                        Origin.Selected = null;
+                        Origin.State = new IdleRoleVM();
 
                     }
                 });
             }
         }
-        private void Add()
+        async Task Add()
         {
             DBMethods db = new();
-            db.AddRole(role);
+            await db.AddRole(role);
         }
-        private void Edit()
+        async Task Edit()
         {
             DBMethods db = new();
-            db.EditRole(role);
+            await db.EditRole(role);
         }
         private void BoundRole()
         {

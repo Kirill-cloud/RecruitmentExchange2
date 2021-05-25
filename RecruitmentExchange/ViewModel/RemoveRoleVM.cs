@@ -39,13 +39,12 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand(obj =>
+                return new RelayCommand(async obj =>
                 {
                     DBMethods db = new();
-                    db.RemoveRole(role);
+                    await db.RemoveRole(role);
 
-                    origin.LoadGridAsync();
-                    origin.Selected = null;
+                    origin.State = new IdleRoleVM();
                 });
             }
         }

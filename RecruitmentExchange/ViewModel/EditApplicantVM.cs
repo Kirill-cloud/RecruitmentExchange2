@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class EditApplicantVM : TabViewBase
+    public class EditApplicantVM : TabViewBase
     {
         public override string TabName { get; set; }
 
@@ -70,7 +70,7 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand((obj) =>
+                return new RelayCommand(async (obj) =>
                 {
                     if (IsValid())
                     {
@@ -78,30 +78,29 @@ namespace RecruitmentExchange.ViewModel
 
                         if (applicant.Id != 0)
                         {
-                            Edit();
+                            await Edit();
                         }
                         else
                         {
-                            Add();
+                            await Add();
                         }
 
-                        origin.State = origin;
-                        origin.Selected = null;
+                        origin.State = new IdleApplicantVM();
 
                     }
                 });
             }
         }
-        private void Add()
+        public async Task Add()
         {
             DBMethods db = new();
-            db.AddApplicant(applicant);
+            await db.AddApplicant(applicant);
 
         }
-        private void Edit()
+        private async Task Edit()
         {
             DBMethods db = new();
-            db.EditApplicant(applicant);
+            await db.EditApplicant(applicant);
         }
         private void BoundApplicant()
         {

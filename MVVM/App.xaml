@@ -9,7 +9,11 @@
             <DataTemplate DataType="{x:Type local:FirstTabVM}">
                 <local:FirstView />
             </DataTemplate>
-            
+
+            <DataTemplate DataType="{x:Type local:AddVM}">
+                <local:AddEntity />
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 

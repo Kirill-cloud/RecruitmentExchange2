@@ -18,6 +18,8 @@ namespace RecruitmentExchange.Model
             remove { CommandManager.RequerySuggested -= value; }
         }
 
+        public bool IsExecuting { get; set; } = false;
+
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
             this.execute = execute;
@@ -26,12 +28,24 @@ namespace RecruitmentExchange.Model
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null || this.canExecute(parameter);
+            return !IsExecuting && (this.canExecute == null || this.canExecute(parameter));
         }
 
-        public void Execute(object parameter)
+        public async void Execute(object parameter)
         {
-            this.execute(parameter);
+            await ExecuteAsync(parameter);
+        }
+        protected async Task ExecuteAsync(object parameter)
+        {
+            IsExecuting = true;
+            try
+            {
+                this.execute(parameter);
+            }
+            catch (Exception)
+            {
+            }
+            IsExecuting = false;
         }
     }
 }

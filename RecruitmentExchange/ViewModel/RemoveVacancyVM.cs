@@ -20,12 +20,11 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand(obj =>
+                return new RelayCommand(async obj =>
                 {
                     DBMethods db = new();
-                    db.RemoveVacancy(selected);
-                    origin.State = origin;
-                    origin.Selected = null;
+                    await db.RemoveVacancy(selected);
+                    origin.State = new IdleVacancyVM();
                 });
             }
         }

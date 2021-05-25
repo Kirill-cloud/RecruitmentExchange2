@@ -17,7 +17,6 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Сделки";
 
-        public Deal Selected { get; set; }
 
         TabViewBase state;
         public TabViewBase State
@@ -29,30 +28,32 @@ namespace RecruitmentExchange.ViewModel
 
         public DealVM()
         {
-            State = this;
+            State = new IdleDealVM();
         }
-        public List<Deal> Deals
-        {
-            get 
-            {
-                DBMethods db = new();
-                return db.GetAllDeals().Result;
-            }
-        }
+
 
 
         public RelayCommand GoAdd => new(obj =>
         {
-            State = new EditDealVM(null, this);
+            if (State is IdleDealVM)
+            {
+                State = new EditDealVM(null, this);
+            }
         });
         public RelayCommand GoEdit => new(obj =>
         {
-            State = new EditDealVM(Selected, this);
+            if (State is IdleDealVM)
+            {
+                State = new EditDealVM((State as IdleDealVM).Selected, this);
+            }
         });
 
         public RelayCommand GoRemove => new(obj =>
         {
-            State = new RemoveDealVM(Selected, this);
+            if (State is IdleDealVM)
+            {
+                State = new RemoveDealVM((State as IdleDealVM).Selected, this);
+            }
         });
 
         public RelayCommand Cancel
@@ -61,8 +62,7 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    State = this;
-                    Selected = null;
+                    State = new IdleDealVM();
                 });
 
             }

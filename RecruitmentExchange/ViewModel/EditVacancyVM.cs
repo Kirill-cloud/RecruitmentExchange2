@@ -55,7 +55,7 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand((obj) =>
+                return new RelayCommand(async (obj) =>
                 {
                     if (IsValid())
                     {
@@ -63,30 +63,30 @@ namespace RecruitmentExchange.ViewModel
 
                         if (vacancy.Id != 0)
                         {
-                            Edit();
+                            await Edit();
                         }
                         else
                         {
-                            Add();
+                            await Add();
                         }
 
-                        origin.LoadGridAsync();
-                        origin.Selected = null;
+                        origin.State = new IdleVacancyVM();
 
                     }
                 });
             }
         }
-        private void Add()
+        private async Task Add()
         {
             DBMethods db = new();
-            db.AddVacany(vacancy);
+            await db.AddVacany(vacancy);
         }
-        private void Edit()
+        private async Task Edit()
         {
             DBMethods db = new();
-            db.EditVacancy(vacancy);
+            await db.EditVacancy(vacancy);
         }
+
         private void BoundVacancy()
         {
             vacancy.Company = SelectedCompany;

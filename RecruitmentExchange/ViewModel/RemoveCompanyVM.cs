@@ -22,11 +22,9 @@ namespace RecruitmentExchange.ViewModel
             this.origin = origin;
 
             LoadRelatedDataAsync();
-
-
         }
 
-        async void LoadRelatedDataAsync()
+        async Task LoadRelatedDataAsync()
         {
             DBMethods db = new();
             VacancyCount = (await db.GetAllVacancies()).Where(x => x.Company.Id == company.Id).Count();
@@ -37,12 +35,11 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand(obj =>
+                return new RelayCommand(async obj =>
                     {
                         DBMethods db = new();
-                        db.RemoveCompany(company);
-                        origin.Selected = null;
-                        origin.LoadGridAsync();
+                        await db.RemoveCompany(company);
+                        origin.State = new IdleCompanyVM();
                     });
             }
         }

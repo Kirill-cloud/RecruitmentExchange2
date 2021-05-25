@@ -16,36 +16,11 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Роли";
 
-        List<Role> roles;
 
         public RoleVM()
         {
-            State = this;
+            State = new IdleRoleVM();
 
-            LoadGridAsync();
-        }
-
-        public async Task LoadGridAsync()
-        {
-            State = new LoadingVM();
-
-            DBMethods db = new();
-            Roles = await db.GetAllRoles();
-
-            State = this;
-        }
-
-        public List<Role> Roles
-        {
-            get
-            {
-                return roles;
-            }
-            set
-            {
-                roles = value;
-                OnPropertyChanged(nameof(Roles));
-            }
         }
 
         TabViewBase state;
@@ -61,7 +36,7 @@ namespace RecruitmentExchange.ViewModel
                 OnPropertyChanged("State");
             }
         }
-        public Role Selected { get; set; }
+
         public RelayCommand GoAdd
         {
             get
@@ -69,7 +44,11 @@ namespace RecruitmentExchange.ViewModel
                 return new RelayCommand(obj =>
                 {
 
-                    State = new EditRoleVM(null, this);
+                    if (State is IdleRoleVM)
+                    {
+                        IdleRoleVM roleVM = (IdleRoleVM)State;
+                        State = new EditRoleVM(null, this);
+                    }
 
                 });
             }
@@ -80,19 +59,28 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    if (Selected != null)
+                    if (State is IdleRoleVM)
                     {
-                        State = new EditRoleVM(Selected, this);
+                        IdleRoleVM roleVM = (IdleRoleVM)State;
+                        if (roleVM.Selected != null)
+                        {
+                            State = new EditRoleVM(roleVM.Selected, this);
+                        }
                     }
                 });
             }
         }
         public RelayCommand GoRemove => new RelayCommand(obj =>
         {
-            if (Selected != null)
+            if (State is IdleRoleVM)
             {
-                State = new RemoveRoleVM(Selected, this);
+                IdleRoleVM roleVM = (IdleRoleVM)State;
+                if (roleVM.Selected != null)
+                {
+                    State = new RemoveRoleVM(roleVM.Selected, this);
+                }
             }
+
         });
 
 
@@ -102,8 +90,7 @@ namespace RecruitmentExchange.ViewModel
             {
                 return new RelayCommand(obj =>
                 {
-                    State = this;
-                    Selected = null;
+                    State = new IdleRoleVM();
                 });
             }
         }

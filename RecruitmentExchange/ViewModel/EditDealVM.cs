@@ -133,7 +133,7 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand((obj) =>
+                return new RelayCommand(async (obj) =>
                 {
                     if (IsValid())
                     {
@@ -141,31 +141,30 @@ namespace RecruitmentExchange.ViewModel
 
                         if (deal.Id != 0)
                         {
-                            Edit();
+                            await Edit();
                         }
                         else
                         {
-                            Add();
+                            await Add();
                         }
 
-                        origin.State = origin;
-                        origin.Selected = null;
+                        origin.State = new IdleDealVM();
 
                     }
                 });
             }
         }
 
-        private void Add()
+        async Task Add()
         {
             DBMethods db = new();
-            db.AddDeal(deal);
+            await db.AddDeal(deal);
         }
 
-        private void Edit()
+        async Task Edit()
         {
             DBMethods db = new();
-            db.EditDeal(deal);
+            await db.EditDeal(deal);
         }
 
         private void BoundDeal()
