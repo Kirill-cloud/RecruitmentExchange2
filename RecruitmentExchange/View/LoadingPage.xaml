@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="Загрузка" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Label Content="Загрузка..." FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <local:AnimatedLoader Width="100" Height="100" />
+            
+        </StackPanel>
     </Grid>
 </UserControl>

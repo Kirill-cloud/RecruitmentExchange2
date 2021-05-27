@@ -12,7 +12,12 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; }
 
-        public int VacancyCount { get; set; }
+        public int VacancyCount { get; set; } = 0;
+        public int DealCount { get; private set; } = 0;
+
+        public string DeleteConstr { get; set; }
+        bool isReady = false;
+
         Company company;
         readonly CompanyVM origin;
         public RemoveCompanyVM(Company company, CompanyVM origin)
@@ -23,12 +28,22 @@ namespace RecruitmentExchange.ViewModel
 
             LoadRelatedDataAsync();
         }
-
         async Task LoadRelatedDataAsync()
         {
             DBMethods db = new();
             VacancyCount = (await db.GetAllVacancies()).Where(x => x.Company.Id == company.Id).Count();
+            DealCount = (await db.GetAllDeals()).Where(x => x.Company.Id == company.Id).Count();
+
+            if (DealCount!=0)
+            {
+                DeleteConstr = "Нельзя удалить компанию пока с ней есть сделки";
+                OnPropertyChanged(nameof(DeleteConstr));
+            }
+
             OnPropertyChanged("VacancyCount");
+            OnPropertyChanged("DealCount");
+
+            isReady = true;
         }
 
         public RelayCommand Remove
@@ -39,8 +54,14 @@ namespace RecruitmentExchange.ViewModel
                     {
                         DBMethods db = new();
                         await db.RemoveCompany(company);
-                        origin.State = new IdleCompanyVM();
-                    });
+
+                        origin.Cancel.Execute(null);
+
+
+                    }, new Func<object, bool>(obj =>
+                    {
+                        return isReady && DealCount==0;
+                    }));
             }
         }
     }

@@ -14,9 +14,8 @@
                 <TextBlock Text="{Binding VacancyCount}" />
                 <TextBlock Text=" связанных вакансий" />
             </WrapPanel>
-            <WrapPanel HorizontalAlignment="Center" >
             <Button Margin="5" Command="{Binding Remove}" >Продолжить</Button>
-            </WrapPanel>
+            <Label Content="{Binding DeleteConstr}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -28,13 +28,20 @@ namespace RecruitmentExchange.ViewModel
         }
         public Company Selected { get; set; }
 
+        CompanyVM origin;
         public IdleCompanyVM()
         {
             LoadGridAsync();
         }
 
+        public IdleCompanyVM(List<Company> companies)
+        {
+            Companies = companies;
+        }
+
         public async Task LoadGridAsync()
         {
+            //origin.State = new LoadingVM();
             DBMethods db = new();
             Companies = await db.GetAllCompanies();
         }

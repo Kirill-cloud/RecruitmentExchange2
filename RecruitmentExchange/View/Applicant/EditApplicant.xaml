@@ -40,7 +40,8 @@
             <TextBox Text="{Binding Description}" />
             <Label Content="Salary" />
             <TextBox Text="{Binding Salary}" />
+            <Button VerticalAlignment="Bottom" Width="100" Margin="30" Command="{Binding AddOrEdit}" >Сохранить</Button>
+            <Label Content="{Binding TabName}" />
         </StackPanel>
-        <Button VerticalAlignment="Bottom" Width="100" Margin="30" Command="{Binding AddOrEdit}" >Сохранить</Button>
     </Grid>
 </UserControl>

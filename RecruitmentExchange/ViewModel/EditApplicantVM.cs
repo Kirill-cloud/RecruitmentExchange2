@@ -57,10 +57,9 @@ namespace RecruitmentExchange.ViewModel
             else
             {
                 Name = applicant.Name;
-                SelectedRole = Roles.Find(c => c.Id == applicant.Role.Id);
+                SelectedRole = Roles.Find(c => c.Id == applicant.RoleId);
                 Description = applicant.Description;
                 Salary = applicant.Salary.ToString();
-
             }
 
             OnPropertyChanged(nameof(Roles));
@@ -91,16 +90,29 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
-        public async Task Add()
+        private async Task Add()
         {
             DBMethods db = new();
-            await db.AddApplicant(applicant);
-
+            try
+            {
+                await db.AddApplicant(applicant);
+            }
+            catch (Exception)
+            {
+                TabName = "Неудалось добавить, попробуйте снова";
+            }
         }
         private async Task Edit()
         {
             DBMethods db = new();
-            await db.EditApplicant(applicant);
+            try
+            {
+                await db.EditApplicant(applicant);
+            }
+            catch (Exception)
+            {
+                TabName = "Неудалось изменить, попробуйте снова или проверьте параметры";
+            }
         }
         private void BoundApplicant()
         {

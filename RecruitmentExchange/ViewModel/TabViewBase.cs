@@ -31,7 +31,7 @@ namespace RecruitmentExchange.ViewModel
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        protected Dictionary<String, List<String>> errors
+        public Dictionary<String, List<String>> errors
         {
             get; 
             set;

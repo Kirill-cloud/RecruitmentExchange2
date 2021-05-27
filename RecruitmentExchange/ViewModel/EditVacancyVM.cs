@@ -24,6 +24,7 @@ namespace RecruitmentExchange.ViewModel
             this.vacancy = vacancy;
             this.origin = origin;
 
+            origin.State = new LoadingVM();
 
             LoadRelatedDataAsync();
 
@@ -49,6 +50,8 @@ namespace RecruitmentExchange.ViewModel
             }
             OnPropertyChanged(nameof(Companies));
             OnPropertyChanged(nameof(Roles));
+
+            origin.State = this;
         }
 
         public RelayCommand AddOrEdit

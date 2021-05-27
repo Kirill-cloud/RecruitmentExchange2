@@ -14,6 +14,10 @@ namespace RecruitmentExchange.ViewModel
         {
             this.selected = selected;
             this.origin = origin;
+
+            origin.State = new LoadingVM();
+            //TODO async load if need
+            origin.State = this;
         }
 
         public RelayCommand Remove

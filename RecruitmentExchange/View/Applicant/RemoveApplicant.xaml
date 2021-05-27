@@ -10,6 +10,7 @@
         <StackPanel HorizontalAlignment="Center"  VerticalAlignment="Center">
             <Label FontSize="26" Content="{Binding TabName}"></Label>
             <Button Command="{Binding Remove}" >Продолжить</Button>
+            <Label Content="{Binding DeleteConstr}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -23,7 +23,7 @@ namespace RecruitmentExchange.AppData
         {
             using AppDBContext db = new();
 
-            return await db.Companies.Include(c => c.Vacansies).ToListAsync();
+            return await db.Companies.Include(c => c.Vacansies).OrderBy(c => c.Name).ToListAsync();
         }
 
         public async Task EditCompany(Company edited)
@@ -56,7 +56,7 @@ namespace RecruitmentExchange.AppData
         public async Task<List<Role>> GetAllRoles()
         {
             using AppDBContext db = new();
-            return await db.Roles.ToListAsync();
+            return await db.Roles.OrderBy(c => c.Name).ToListAsync();
         }
         public async Task<string> RemoveRole(Role role)
         {
@@ -166,7 +166,7 @@ namespace RecruitmentExchange.AppData
             {
                 Id = applicant.Id,
                 Name = applicant.Name,
-                RoleId = applicant.Role.Id,
+                RoleId = applicant.RoleId,
                 Description = applicant.Description,
                 Salary = applicant.Salary,
                 IsActive = applicant.IsActive
@@ -190,11 +190,13 @@ namespace RecruitmentExchange.AppData
         public async Task<List<Deal>> GetAllDeals()
         {
             using AppDBContext db = new();
-            return await db.Deals
+
+            var x = await db.Deals
                                 .Include(x => x.Applicant)
                                 .Include(x => x.Vacancy)
                                 .Include(x => x.Vacancy.Role)
                                 .Include(x => x.Company).ToListAsync();
+            return x;
         }
 
         public async Task EditDeal(Deal deal)

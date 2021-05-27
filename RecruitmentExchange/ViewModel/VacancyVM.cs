@@ -46,7 +46,7 @@ namespace RecruitmentExchange.ViewModel
                 {
                     if (State is IdleVacancyVM)
                     {
-                        State = new EditVacancyVM(null, this);
+                        new EditVacancyVM(null, this);
                     }
                 });
             }
@@ -62,7 +62,7 @@ namespace RecruitmentExchange.ViewModel
                         IdleVacancyVM vM = (IdleVacancyVM)State;
                         if (vM.Selected != null)
                         {
-                            State = new EditVacancyVM(vM.Selected, this);
+                            new EditVacancyVM(vM.Selected, this);
                         }
                     }
                 });
@@ -79,7 +79,7 @@ namespace RecruitmentExchange.ViewModel
                         IdleVacancyVM vM = (IdleVacancyVM)State;
                         if (vM.Selected != null)
                         {
-                            State = new RemoveVacancyVM(vM.Selected, this);
+                            new RemoveVacancyVM(vM.Selected, this);
                         }
                     }
                 });

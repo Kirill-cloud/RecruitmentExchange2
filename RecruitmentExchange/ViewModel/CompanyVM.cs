@@ -34,9 +34,20 @@ namespace RecruitmentExchange.ViewModel
         }
         public CompanyVM()
         {
-            State = new IdleCompanyVM();
+            Cancel.Execute(null);
         }
 
+
+        static bool IsLoading { get; set; } = false;
+
+        Func<object, bool> CheckLoading2 = (c) =>
+        {
+            return !IsLoading;
+        };
+        bool CheckLoading(object o)
+        {
+            return !IsLoading;
+        }
         //Create
         public RelayCommand GoAdd
         {
@@ -45,10 +56,10 @@ namespace RecruitmentExchange.ViewModel
                 return new RelayCommand(obj =>
                 {
                     State = new EditCompanyVM(null, this);
-                });
+                }, CheckLoading);
             }
         }
-         //Update
+        //Update
         public RelayCommand GoEdit
         {
             get
@@ -59,7 +70,7 @@ namespace RecruitmentExchange.ViewModel
                     {
                         State = new EditCompanyVM((State as IdleCompanyVM).Selected, this);
                     }
-                });
+                }, CheckLoading);
             }
         }
         //Delete
@@ -73,7 +84,7 @@ namespace RecruitmentExchange.ViewModel
                     {
                         State = new RemoveCompanyVM((State as IdleCompanyVM).Selected, this);
                     }
-                });
+                }, CheckLoading);
             }
         }
 
@@ -81,10 +92,17 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand(obj =>
+                return new RelayCommand(async obj =>
                 {
-                    State = new IdleCompanyVM();
-                });
+                    IsLoading = true;
+
+                    State = new LoadingVM();
+                    DBMethods db = new();
+                    //await Task.Delay(5000);
+                    State = new IdleCompanyVM(await db.GetAllCompanies());
+
+                    IsLoading = false;
+                }, CheckLoading);
 
             }
         }

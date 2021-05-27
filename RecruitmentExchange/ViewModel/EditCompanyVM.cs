@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class EditCompanyVM : TabViewBase
+    public class EditCompanyVM : TabViewBase
     {
         public override string TabName { get; set; } = "Редактирование Компании ";
 
@@ -59,7 +59,7 @@ namespace RecruitmentExchange.ViewModel
                             await Add();
                         }
 
-                        Origin.State = new IdleCompanyVM();
+                        Origin.Cancel.Execute(null);
 
                     }
                 });
@@ -89,7 +89,7 @@ namespace RecruitmentExchange.ViewModel
             Validate();
             return (errors.Count == 0);
         }
-        void Validate()
+        public void Validate()
         {
             errors.Clear();
 

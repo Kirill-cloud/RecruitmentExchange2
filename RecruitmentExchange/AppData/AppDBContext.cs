@@ -19,20 +19,20 @@ namespace RecruitmentExchange.AppData
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=REdata;Trusted_Connection=True;");
         }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Vacancy>()
-                .HasOne(c => c.Company)
-                .WithMany(t => t.Vacansies)
-                .OnDelete(DeleteBehavior.Cascade);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Vacancy>()
+        //        .HasOne(c => c.Company)
+        //        .WithMany(t => t.Vacansies)
+        //        .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Vacancy>()
-                        .HasOne(c => c.Role)
-                        .WithMany(t => t.Vacancies)
-                        .OnDelete(DeleteBehavior.Cascade);
+        //    modelBuilder.Entity<Vacancy>()
+        //                .HasOne(c => c.Role)
+        //                .WithMany(t => t.Vacancies)
+        //                .OnDelete(DeleteBehavior.Cascade);
 
 
-        }
+        //}
 
     }
 }

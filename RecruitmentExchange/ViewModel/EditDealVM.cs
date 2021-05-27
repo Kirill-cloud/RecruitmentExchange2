@@ -106,11 +106,16 @@ namespace RecruitmentExchange.ViewModel
             this.deal = deal;
             this.origin = origin;
 
+            origin.State = new LoadingVM();
+
+
             LoadRelatedDataAsync();
+            
         }
-        
+
         async Task LoadRelatedDataAsync()
         {
+
             DBMethods db = new();
 
             Companies = await db.GetAllCompanies();
@@ -127,6 +132,7 @@ namespace RecruitmentExchange.ViewModel
                 OnPropertyChanged("TabName");
             }
 
+            origin.State = this;
         }
 
         public RelayCommand AddOrEdit

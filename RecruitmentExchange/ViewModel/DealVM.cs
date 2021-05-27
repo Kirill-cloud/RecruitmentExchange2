@@ -37,14 +37,14 @@ namespace RecruitmentExchange.ViewModel
         {
             if (State is IdleDealVM)
             {
-                State = new EditDealVM(null, this);
+              new EditDealVM(null, this);
             }
         });
         public RelayCommand GoEdit => new(obj =>
         {
             if (State is IdleDealVM)
             {
-                State = new EditDealVM((State as IdleDealVM).Selected, this);
+                new EditDealVM((State as IdleDealVM).Selected, this);
             }
         });
 
@@ -52,7 +52,7 @@ namespace RecruitmentExchange.ViewModel
         {
             if (State is IdleDealVM)
             {
-                State = new RemoveDealVM((State as IdleDealVM).Selected, this);
+               new RemoveDealVM((State as IdleDealVM).Selected, this);
             }
         });
 
