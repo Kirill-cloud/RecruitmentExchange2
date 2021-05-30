@@ -124,31 +124,31 @@ namespace RecruitmentExchange.ViewModel
         private bool IsValid()
         {
             Validate();
-            return (errors.Count == 0);
+            return (Errors.Count == 0);
 
         }
-        private void Validate()
+        public void Validate()
         {
-            errors.Clear();
+            Errors.Clear();
 
             if (Name == null || Name == "")
             {
-                errors.Add("Name", new List<string>() { "empty" });
+                Errors.Add("Name", new List<string>() { "empty" });
             }
 
             if (SelectedRole == null)
             {
-                errors.Add("SelectedRole", new List<string>() { "empty" });
+                Errors.Add("SelectedRole", new List<string>() { "empty" });
             }
 
             if (Description == null || Description == "")
             {
-                errors.Add("Description", new List<string>() { "empty" });
+                Errors.Add("Description", new List<string>() { "empty" });
             }
 
             if (Salary == null || Salary == "" || !Decimal.TryParse(Salary, out parsedSalary))
             {
-                errors.Add("Salary", new List<string>() { "empty" });
+                Errors.Add("Salary", new List<string>() { "empty" });
             }
 
             RaiseErrorsChanged(nameof(Name));

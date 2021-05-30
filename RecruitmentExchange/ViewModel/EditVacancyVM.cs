@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    internal class EditVacancyVM : TabViewBase
+    public class EditVacancyVM : TabViewBase
     {
         public override string TabName { get; set; } = "Редактор вакансии";
 
@@ -24,7 +24,6 @@ namespace RecruitmentExchange.ViewModel
             this.vacancy = vacancy;
             this.origin = origin;
 
-            origin.State = new LoadingVM();
 
             LoadRelatedDataAsync();
 
@@ -33,6 +32,8 @@ namespace RecruitmentExchange.ViewModel
 
         async Task LoadRelatedDataAsync()
         {
+            origin.State = new LoadingVM();
+
             DBMethods db = new();
 
             Roles = await db.GetAllRoles();
@@ -100,24 +101,24 @@ namespace RecruitmentExchange.ViewModel
         {
             Validate();
 
-            return (errors.Count == 0);
+            return (Errors.Count == 0);
         }
-        void Validate()
+        public void Validate()
         {
-            errors.Clear();
+            Errors.Clear();
 
 
             if (SelectedRole == null)
             {
-                errors.Add("SelectedRole", new List<string>() { "empty" });
+                Errors.Add("SelectedRole", new List<string>() { "empty" });
             }
             if (SelectedCompany == null)
             {
-                errors.Add("SelectedCompany", new List<string>() { "empty" });
+                Errors.Add("SelectedCompany", new List<string>() { "empty" });
             }
             if (Description == null || Description == "")
             {
-                errors.Add("Description", new List<string>() { "empty" });
+                Errors.Add("Description", new List<string>() { "empty" });
             }
 
             RaiseErrorsChanged(nameof(SelectedRole));

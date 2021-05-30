@@ -87,27 +87,27 @@ namespace RecruitmentExchange.ViewModel
         private bool IsValid()
         {
             Validate();
-            return (errors.Count == 0);
+            return (Errors.Count == 0);
         }
         public void Validate()
         {
-            errors.Clear();
+            Errors.Clear();
 
             if (Name == null || Name == "")
             {
-                errors.Add("Name", new List<string>() { "empty" });
+                Errors.Add("Name", new List<string>() { "empty" });
             }
             if (Focus == null || Focus == "")
             {
-                errors.Add("Focus", new List<string>() { "empty" });
+                Errors.Add("Focus", new List<string>() { "empty" });
             }
             if (Address == null || Address == "")
             {
-                errors.Add("Address", new List<string>() { "empty" });
+                Errors.Add("Address", new List<string>() { "empty" });
             }
             if (Phone == null || Phone == "")
             {
-                errors.Add("Phone", new List<string>() { "empty" });
+                Errors.Add("Phone", new List<string>() { "empty" });
             }
 
             RaiseErrorsChanged(nameof(Name));

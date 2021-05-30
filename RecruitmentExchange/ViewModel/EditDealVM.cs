@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class EditDealVM : TabViewBase
+    public class EditDealVM : TabViewBase
     {
         public override string TabName { get; set; } = "Добавление сделки";
 
@@ -105,16 +105,13 @@ namespace RecruitmentExchange.ViewModel
         {
             this.deal = deal;
             this.origin = origin;
-
-            origin.State = new LoadingVM();
-
-
+         
             LoadRelatedDataAsync();
-            
         }
 
         async Task LoadRelatedDataAsync()
         {
+            origin.State = new LoadingVM();
 
             DBMethods db = new();
 
@@ -185,27 +182,27 @@ namespace RecruitmentExchange.ViewModel
         private bool IsValid()
         {
             Validate();
-            return (errors.Count == 0);
+            return (Errors.Count == 0);
 
         }
 
-        private void Validate()
+        public void Validate()
         {
-            errors.Clear();
+            Errors.Clear();
 
             if (SelectedCompany == null)
             {
-                errors.Add("SelectedCompany", new List<string>() { "empty" });
+                Errors.Add("SelectedCompany", new List<string>() { "empty" });
             }
 
             if (SelectedVacancy == null)
             {
-                errors.Add("SelectedVacancy", new List<string>() { "empty" });
+                Errors.Add("SelectedVacancy", new List<string>() { "empty" });
             }
 
             if (SelectedApplicant == null)
             {
-                errors.Add("SelectedApplicant", new List<string>() { "empty" });
+                Errors.Add("SelectedApplicant", new List<string>() { "empty" });
             }
 
             RaiseErrorsChanged(nameof(SelectedCompany));

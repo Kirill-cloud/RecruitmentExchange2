@@ -74,15 +74,15 @@ namespace RecruitmentExchange.ViewModel
         {
             Validate();
 
-            return (errors.Count == 0);
+            return (Errors.Count == 0);
         }
-        void Validate()
+        public void Validate()
         {
-            errors.Clear();
+            Errors.Clear();
 
             if (Name == null || Name == "")
             {
-                errors.Add("Name", new List<string>() { "empty" });
+                Errors.Add("Name", new List<string>() { "empty" });
             }
 
             RaiseErrorsChanged(nameof(Name));

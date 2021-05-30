@@ -31,16 +31,16 @@ namespace RecruitmentExchange.ViewModel
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        public Dictionary<String, List<String>> errors
+        public Dictionary<String, List<String>> Errors
         {
             get; 
             set;
         } = new Dictionary<string, List<string>>();
         public IEnumerable GetErrors(string propertyName)
         {
-            if (String.IsNullOrEmpty(propertyName) || !errors.ContainsKey(propertyName)) return null;
-            return errors[propertyName];
+            if (String.IsNullOrEmpty(propertyName) || !Errors.ContainsKey(propertyName)) return null;
+            return Errors[propertyName];
         }
-        public bool HasErrors => errors.Count > 0;
+        public bool HasErrors => Errors.Count > 0;
     }
 }
