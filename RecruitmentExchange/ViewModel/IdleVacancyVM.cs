@@ -28,14 +28,10 @@ namespace RecruitmentExchange.ViewModel
         public Vacancy Selected { get; set; }
 
 
-        public IdleVacancyVM()
+        public IdleVacancyVM(List<Vacancy> vacancies)
         {
-            LoadGridAsync();
+            Vacancies = vacancies;
         }
-        public async Task LoadGridAsync()
-        {
-            DBMethods db = new();
-            Vacancies = await db.GetAllVacancies();
-        }
+
     }
 }

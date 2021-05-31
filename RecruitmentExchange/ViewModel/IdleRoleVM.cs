@@ -26,15 +26,9 @@ namespace RecruitmentExchange.ViewModel
             }
         }
 
-        public IdleRoleVM()
+        public IdleRoleVM(List<Role> roles)
         {
-            LoadGridAsync();
-        }
-
-        public async Task LoadGridAsync()
-        {
-            DBMethods db = new();
-            Roles = await db.GetAllRoles();
+            Roles = roles;
         }
     }
 }

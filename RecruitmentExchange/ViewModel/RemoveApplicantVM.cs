@@ -54,7 +54,7 @@ namespace RecruitmentExchange.ViewModel
                 {
                     DBMethods db = new();
                     await db.RemoveApplicant(applicant);
-                    origin.State = new IdleApplicantVM();
+                    origin.Cancel.Execute(null);
                 }, new Func<object, bool>(obj =>
                 {
                     return isReady && DealCount == 0;

@@ -56,7 +56,11 @@ namespace RecruitmentExchange.AppData
         public async Task<List<Role>> GetAllRoles()
         {
             using AppDBContext db = new();
-            return await db.Roles.OrderBy(c => c.Name).ToListAsync();
+
+            return await db.Roles.OrderBy(c => c.Name)
+                                 .Include(r => r.Applicants)
+                                 .Include(r => r.Vacancies)
+                                 .ToListAsync();
         }
         public async Task<string> RemoveRole(Role role)
         {

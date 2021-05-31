@@ -28,7 +28,7 @@ namespace RecruitmentExchange.ViewModel
                 {
                     DBMethods db = new();
                     await db.RemoveVacancy(selected);
-                    origin.State = new IdleVacancyVM();
+                    origin.Cancel.Execute(null);
                 });
             }
         }

@@ -15,7 +15,7 @@ namespace RecruitmentExchange.ViewModel
 
         public ApplicantVM()
         {
-            State = new IdleApplicantVM();
+            Cancel.Execute(null);
         }
 
         public RelayCommand GoAdd => new(obj =>
@@ -46,12 +46,20 @@ namespace RecruitmentExchange.ViewModel
         {
             get
             {
-                return new RelayCommand(obj =>
+                return new RelayCommand(async obj =>
                 {
-                    State = new IdleApplicantVM();
+                    IsLoading = true;
+                    State = new LoadingVM();
+
+                    DBMethods db = new();
+                    State = new IdleApplicantVM(await db.GetAllApplicants());
+
+                    IsLoading = false;
                 });
 
             }
         }
+
+        public bool IsLoading { get; private set; }
     }
 }

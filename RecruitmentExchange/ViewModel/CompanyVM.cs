@@ -80,13 +80,13 @@ namespace RecruitmentExchange.ViewModel
                 return new RelayCommand(async obj =>
                 {
                     IsLoading = true;
-
                     State = new LoadingVM();
+
                     DBMethods db = new();
-                    //await Task.Delay(5000);
                     State = new IdleCompanyVM(await db.GetAllCompanies());
 
                     IsLoading = false;
+
                 }, CheckLoading);
 
             }

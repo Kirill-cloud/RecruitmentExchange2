@@ -16,11 +16,9 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Роли";
 
-
         public RoleVM()
         {
-            State = new IdleRoleVM();
-
+            Cancel.Execute(null);
         }
 
         public RelayCommand GoAdd
@@ -39,6 +37,7 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
+
         public RelayCommand GoEdit
         {
             get
@@ -56,7 +55,8 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
-        public RelayCommand GoRemove => new RelayCommand(obj =>
+
+        public RelayCommand GoRemove => new RelayCommand(async obj =>
         {
             if (State is IdleRoleVM)
             {
@@ -69,18 +69,23 @@ namespace RecruitmentExchange.ViewModel
 
         });
 
-
         public RelayCommand Cancel
         {
             get
             {
-                return new RelayCommand(obj =>
+                return new RelayCommand(async obj =>
                 {
-                    State = new IdleRoleVM();
+                    IsLoading = true;
+                    State = new LoadingVM();
+
+                    DBMethods db = new();
+                    State = new IdleRoleVM(await db.GetAllRoles());
+
+                    IsLoading = false;
                 });
             }
         }
 
-
+        public bool IsLoading { get; private set; }
     }
 }

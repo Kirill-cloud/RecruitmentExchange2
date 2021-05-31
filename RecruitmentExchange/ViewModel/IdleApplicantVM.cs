@@ -27,14 +27,9 @@ namespace RecruitmentExchange.ViewModel
             }
         }
 
-        public IdleApplicantVM()
+        public IdleApplicantVM(List<Applicant> applicants)
         {
-            LoadGridAsync();
-        }
-        async Task LoadGridAsync()
-        {
-            DBMethods dB = new();
-            Applicants = await dB.GetAllApplicants();
+            Applicants = applicants;
         }
     }
 }

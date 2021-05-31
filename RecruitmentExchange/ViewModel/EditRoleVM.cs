@@ -50,7 +50,7 @@ namespace RecruitmentExchange.ViewModel
                             await Add();
                         }
 
-                        Origin.State = new IdleRoleVM();
+                        Origin.Cancel.Execute(null);
 
                     }
                 });

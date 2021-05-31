@@ -74,7 +74,7 @@ namespace RecruitmentExchange.ViewModel
                             await Add();
                         }
 
-                        origin.State = new IdleVacancyVM();
+                        origin.Cancel.Execute(null);
 
                     }
                 });

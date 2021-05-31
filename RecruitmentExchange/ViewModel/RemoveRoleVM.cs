@@ -1,4 +1,5 @@
-﻿using RecruitmentExchange.AppData;
+﻿using Microsoft.EntityFrameworkCore;
+using RecruitmentExchange.AppData;
 using RecruitmentExchange.Model;
 using System;
 using System.Collections.Generic;
@@ -23,16 +24,9 @@ namespace RecruitmentExchange.ViewModel
             origin = Origin;
             this.role = role;
             TabName += role.Name;
-            LoadRelatedDataAsync();
-        }
 
-        private async Task LoadRelatedDataAsync()
-        {
-            DBMethods db = new DBMethods();
-            ApplicantCount = (await db.GetAllApplicants()).Where(x => x.Role.Id == role.Id).Count();
-            VacancyCount = (await db.GetAllVacancies()).Where(x => x.Role.Id == role.Id).Count();
-            OnPropertyChanged(nameof(ApplicantCount));
-            OnPropertyChanged(nameof(VacancyCount));
+            ApplicantCount = role.Applicants.Count;
+            VacancyCount = role.Vacancies.Count;
         }
 
         public RelayCommand Remove
@@ -44,7 +38,7 @@ namespace RecruitmentExchange.ViewModel
                     DBMethods db = new();
                     await db.RemoveRole(role);
 
-                    origin.State = new IdleRoleVM();
+                    origin.Cancel.Execute(null);
                 });
             }
         }

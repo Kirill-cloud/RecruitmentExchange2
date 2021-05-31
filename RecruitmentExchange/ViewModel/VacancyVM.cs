@@ -19,12 +19,9 @@ namespace RecruitmentExchange.ViewModel
 
         public VacancyVM()
         {
-            State = new IdleVacancyVM();
+            Cancel.Execute(null);
         }
-
-
-
-
+        
         public RelayCommand GoAdd
         {
             get
@@ -72,13 +69,21 @@ namespace RecruitmentExchange.ViewModel
                 });
             }
         }
+        public bool IsLoading { get; private set; }
+
         public RelayCommand Cancel
         {
             get
             {
-                return new RelayCommand(obj =>
+                return new RelayCommand(async obj =>
                 {
-                    State = new IdleVacancyVM();
+                    IsLoading = true;
+                    State = new LoadingVM();
+
+                    DBMethods db = new();
+                    State = new IdleVacancyVM(await db.GetAllVacancies());
+
+                    IsLoading = false;
                 });
 
             }

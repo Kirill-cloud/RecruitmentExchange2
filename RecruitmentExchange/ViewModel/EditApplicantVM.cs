@@ -62,6 +62,10 @@ namespace RecruitmentExchange.ViewModel
                 SelectedRole = Roles.Find(c => c.Id == applicant.RoleId);
                 Description = applicant.Description;
                 Salary = applicant.Salary.ToString();
+                OnPropertyChanged(nameof(Name));
+                OnPropertyChanged(nameof(SelectedRole));
+                OnPropertyChanged(nameof(Description));
+                OnPropertyChanged(nameof(Salary));
             }
 
             OnPropertyChanged(nameof(Roles));
@@ -86,7 +90,7 @@ namespace RecruitmentExchange.ViewModel
                             await Add();
                         }
 
-                        origin.State = new IdleApplicantVM();
+                        origin.Cancel.Execute(null);
 
                     }
                 });
@@ -119,7 +123,7 @@ namespace RecruitmentExchange.ViewModel
         private void BoundApplicant()
         {
             applicant.Name = Name;
-            applicant.Role = SelectedRole;
+            applicant.RoleId = SelectedRole.Id;
             applicant.Description = Description;
             applicant.Salary = parsedSalary;
         }
