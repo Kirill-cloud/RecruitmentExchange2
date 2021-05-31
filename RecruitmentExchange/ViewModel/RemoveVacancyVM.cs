@@ -3,7 +3,7 @@ using RecruitmentExchange.Model;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class RemoveVacancyVM : TabViewBase
+    public class RemoveVacancyVM : TabContentBase
     {
         public override string TabName { get; set; } = "Удалить..."; 
         

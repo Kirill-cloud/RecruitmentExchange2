@@ -23,20 +23,6 @@ namespace RecruitmentExchange.ViewModel
 
         }
 
-        TabViewBase state;
-        public TabViewBase State
-        {
-            get
-            {
-                return state;
-            }
-            set
-            {
-                state = value;
-                OnPropertyChanged("State");
-            }
-        }
-
         public RelayCommand GoAdd
         {
             get

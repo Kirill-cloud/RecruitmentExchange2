@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class IdleCompanyVM : TabViewBase
+    class IdleCompanyVM : TabContentBase
     {
         public override string TabName { get; set; } = "Компании";
 
@@ -41,7 +41,7 @@ namespace RecruitmentExchange.ViewModel
 
         public async Task LoadGridAsync()
         {
-            //origin.State = new LoadingVM();
+            origin.State = new LoadingVM();
             DBMethods db = new();
             Companies = await db.GetAllCompanies();
         }

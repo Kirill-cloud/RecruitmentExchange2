@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class EditDealVM : TabViewBase
+    public class EditDealVM : TabContentBase
     {
         public override string TabName { get; set; } = "Добавление сделки";
 
@@ -88,7 +88,7 @@ namespace RecruitmentExchange.ViewModel
                     return applicants.Where(apl => apl.RoleId == SelectedVacancy.RoleId ).ToList();
                 }
                 else
-                {
+                { 
                     return new();
                 }
             }

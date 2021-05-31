@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class RemoveApplicantVM : TabViewBase
+    public class RemoveApplicantVM : TabContentBase
     {
         private Applicant applicant;
         private readonly ApplicantVM origin;

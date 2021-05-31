@@ -16,19 +16,6 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Вакансии";
 
-        TabViewBase state;
-        public TabViewBase State
-        {
-            get
-            {
-                return state;
-            }
-            set
-            {
-                state = value;
-                OnPropertyChanged("State");
-            }
-        }
 
         public VacancyVM()
         {

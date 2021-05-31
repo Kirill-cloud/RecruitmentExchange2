@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class RemoveDealVM : TabViewBase
+    class RemoveDealVM : TabContentBase
     {
         public override string TabName { get; set; } = "Удать сделку между ";
 

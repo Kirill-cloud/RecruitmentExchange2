@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class LoadingVM : TabViewBase
+    class LoadingVM : TabContentBase
     {
         public override string TabName { get; set; } = "load";
     }

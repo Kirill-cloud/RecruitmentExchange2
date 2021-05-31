@@ -17,21 +17,10 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Сделки";
 
-
-        TabViewBase state;
-        public TabViewBase State
-        {
-            get
-            { return state; }
-            set { state = value; OnPropertyChanged("State"); }
-        }
-
         public DealVM()
         {
             State = new IdleDealVM();
         }
-
-
 
         public RelayCommand GoAdd => new(obj =>
         {
@@ -40,6 +29,7 @@ namespace RecruitmentExchange.ViewModel
               new EditDealVM(null, this);
             }
         });
+
         public RelayCommand GoEdit => new(obj =>
         {
             if (State is IdleDealVM)
@@ -52,7 +42,11 @@ namespace RecruitmentExchange.ViewModel
         {
             if (State is IdleDealVM)
             {
-               new RemoveDealVM((State as IdleDealVM).Selected, this);
+                var selectedDeal = (State as IdleDealVM).Selected;
+                if (selectedDeal!=null)
+                {
+                    State = new RemoveDealVM(selectedDeal, this);
+                }
             }
         });
 
@@ -64,7 +58,6 @@ namespace RecruitmentExchange.ViewModel
                 {
                     State = new IdleDealVM();
                 });
-
             }
         }
     }

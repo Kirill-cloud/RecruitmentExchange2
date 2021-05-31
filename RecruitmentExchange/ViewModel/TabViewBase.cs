@@ -11,36 +11,29 @@ using System.Windows.Controls;
 
 namespace RecruitmentExchange.ViewModel
 {
-    abstract public class TabViewBase : INotifyPropertyChanged, INotifyDataErrorInfo
+    abstract public class TabViewBase : INotifyPropertyChanged
     {
         public abstract string TabName { get; set; }
 
-
-
+        protected TabContentBase state;
+        public TabContentBase State
+        {
+            get
+            {
+                return state;
+            }
+            set
+            {
+                state = value; 
+                OnPropertyChanged();
+            }
+        }
 
         // Observable
         public event PropertyChangedEventHandler PropertyChanged;
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
         public void OnPropertyChanged([CallerMemberName] string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-        public void RaiseErrorsChanged(string propertyName)
-        {
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-        }
-
-        public Dictionary<String, List<String>> Errors
-        {
-            get; 
-            set;
-        } = new Dictionary<string, List<string>>();
-        public IEnumerable GetErrors(string propertyName)
-        {
-            if (String.IsNullOrEmpty(propertyName) || !Errors.ContainsKey(propertyName)) return null;
-            return Errors[propertyName];
-        }
-        public bool HasErrors => Errors.Count > 0;
     }
 }

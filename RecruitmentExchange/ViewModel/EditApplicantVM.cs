@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class EditApplicantVM : TabViewBase
+    public class EditApplicantVM : TabContentBase
     {
         public override string TabName { get; set; }
 
@@ -31,7 +31,9 @@ namespace RecruitmentExchange.ViewModel
         public string Salary { get; set; }
 
         Decimal parsedSalary;
+
         Applicant applicant;
+
         readonly ApplicantVM origin;
         public EditApplicantVM(Applicant applicant, ApplicantVM origin)
         {

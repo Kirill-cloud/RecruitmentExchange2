@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class RemoveRoleVM : TabViewBase
+    class RemoveRoleVM : TabContentBase
     {
         public override string TabName { get; set; } = "Удаление роли";
 

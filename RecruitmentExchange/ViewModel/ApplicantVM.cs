@@ -13,20 +13,11 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Соискатели";
 
-
-        TabViewBase state;
-        public TabViewBase State
-        {
-            get
-            { return state; }
-            set { state = value; OnPropertyChanged("State"); }
-        }
-
         public ApplicantVM()
         {
             State = new IdleApplicantVM();
-
         }
+
         public RelayCommand GoAdd => new(obj =>
         {
             if (State is IdleApplicantVM)
@@ -34,6 +25,7 @@ namespace RecruitmentExchange.ViewModel
                 State = new EditApplicantVM(null, this);
             }
         });
+
         public RelayCommand GoEdit => new(obj =>
         {
             if (State is IdleApplicantVM)
@@ -41,6 +33,7 @@ namespace RecruitmentExchange.ViewModel
                 State = new EditApplicantVM((State as IdleApplicantVM).Selected, this);
             }
         });
+
         public RelayCommand GoRemove => new(obj =>
         {
             if (State is IdleApplicantVM)
@@ -48,6 +41,7 @@ namespace RecruitmentExchange.ViewModel
                 State = new RemoveApplicantVM((State as IdleApplicantVM).Selected, this);
             }
         });
+
         public RelayCommand Cancel
         {
             get

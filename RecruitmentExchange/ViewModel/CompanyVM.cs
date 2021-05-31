@@ -19,35 +19,12 @@ namespace RecruitmentExchange.ViewModel
     {
         public override string TabName { get; set; } = "Компании";
 
-        TabViewBase state;
-        public TabViewBase State
-        {
-            get
-            {
-                return state;
-            }
-            set
-            {
-                state = value;
-                OnPropertyChanged();
-            }
-        }
         public CompanyVM()
         {
             Cancel.Execute(null);
         }
 
 
-        static bool IsLoading { get; set; } = false;
-
-        Func<object, bool> CheckLoading2 = (c) =>
-        {
-            return !IsLoading;
-        };
-        bool CheckLoading(object o)
-        {
-            return !IsLoading;
-        }
         //Create
         public RelayCommand GoAdd
         {
@@ -59,6 +36,14 @@ namespace RecruitmentExchange.ViewModel
                 }, CheckLoading);
             }
         }
+
+        static bool IsLoading { get; set; } = false;
+
+        bool CheckLoading(object o)
+        {
+            return !IsLoading;
+        }
+
         //Update
         public RelayCommand GoEdit
         {

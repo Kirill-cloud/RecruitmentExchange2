@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class IdleVacancyVM : TabViewBase
+    class IdleVacancyVM : TabContentBase
     {
         public override string TabName { get; set; } = "";
 

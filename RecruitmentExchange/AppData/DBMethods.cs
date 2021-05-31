@@ -190,7 +190,7 @@ namespace RecruitmentExchange.AppData
         public async Task<List<Deal>> GetAllDeals()
         {
             using AppDBContext db = new();
-
+            
             var x = await db.Deals
                                 .Include(x => x.Applicant)
                                 .Include(x => x.Vacancy)

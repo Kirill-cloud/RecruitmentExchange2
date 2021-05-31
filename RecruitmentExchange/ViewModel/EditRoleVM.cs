@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class EditRoleVM : TabViewBase
+    public class EditRoleVM : TabContentBase
     {
         public override string TabName { get; set; } = "Редактирование Роли ";
 

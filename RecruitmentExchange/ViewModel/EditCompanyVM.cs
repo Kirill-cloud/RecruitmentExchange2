@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    public class EditCompanyVM : TabViewBase
+    public class EditCompanyVM : TabContentBase
     {
         public override string TabName { get; set; } = "Редактирование Компании ";
 

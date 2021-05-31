@@ -8,10 +8,23 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class IdleDealVM : TabViewBase
+    class IdleDealVM : TabContentBase
     {
         public override string TabName { get; set; } = "";
         public Deal Selected { get; set; }
+        private string totalProfit;
+
+        public string TotalProfit
+        {
+            get
+            {
+                return totalProfit;
+            }
+            set
+            {
+                totalProfit = value; OnPropertyChanged();
+            }
+        }
 
         List<Deal> deals;
         public List<Deal> Deals
@@ -36,6 +49,8 @@ namespace RecruitmentExchange.ViewModel
         {
             DBMethods db = new();
             Deals = await db.GetAllDeals();
+
+            TotalProfit = "Всего заработано: " + Deals.Sum(x => x.Profit);
         }
 
     }

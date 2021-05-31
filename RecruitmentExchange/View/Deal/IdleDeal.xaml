@@ -7,7 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <DataGrid ItemsSource="{Binding Deals}" SelectionMode="Single" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" SelectedItem="{Binding Selected}" >
+        <StackPanel>
+            <Label Content="{Binding TotalProfit}"/>
+            <DataGrid ItemsSource="{Binding Deals}" SelectionMode="Single" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False" SelectedItem="{Binding Selected}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Aplicant" Binding="{Binding Path=Applicant.Name}" />
                 <DataGridTextColumn Header="Vacancy" Binding="{Binding Path=Company.Name}" />
@@ -16,5 +18,6 @@
                 <DataGridTextColumn Header="Profit" Binding="{Binding Path=Profit}" />
             </DataGrid.Columns>
         </DataGrid>
+        </StackPanel>
     </Grid>
 </UserControl>

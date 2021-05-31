@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RecruitmentExchange.ViewModel
 {
-    class IdleRoleVM : TabViewBase
+    class IdleRoleVM : TabContentBase
     {
         public override string TabName { get; set; }
         public Role Selected { get; set; }
